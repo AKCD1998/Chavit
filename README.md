@@ -36,3 +36,9 @@ Tap the weather overview to open a dedicated weather screen matching the supplie
 The Me tab reproduces the supplied profile layout with a large avatar/name/account ID, shortcuts, and grouped menu rows. Scrolling reveals a compact sticky profile header. Editing the name updates both profile headers in the current session. The account ID and avatar are mock fixtures; submenu destinations are placeholders pending reference screens.
 
 The Smart tab matches the supplied empty automation and tap-to-run views, including custom illustrations, selected-tab styling, a house selector and a plus button. Tab state is retained while navigating elsewhere. Plus opens a placeholder for the selected type; no real automations execute.
+
+## Shop reference screen
+
+The Shop tab reproduces the supplied six categories, promotional banner, two-column product cards and floating support button. ALL contains 20 products, and each specific category contains four products. Product imagery is downloaded from official INKBIRD Shopify CDN assets, bundled locally and listed in `assets/shop/sources.json` with original URLs. The INT-12-BW and INT-14-BW images use the older official assets matching the reference screenshot. The promotional banner is a generated reconstruction from the user's screenshot. Some lower-row/current-version images differ from the reference.
+
+Prices visible in the supplied screenshots are preserved as static demo prices; additional products use official catalog snapshot prices. `price_source` records which applies. These are not live offers. Product taps show a simple image/name/price preview; support and banner destinations are placeholders. There is no checkout, newsletter submission or message sending. All store assets work offline in the APK.

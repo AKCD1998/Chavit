@@ -1,0 +1,204 @@
+{
+  "grinder": {
+    "handle": "2-in-1-dual-chamber-electric-grinder",
+    "title": "2-in-1 Dual-Chamber Electric Grinder",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/inkbird-dual-chamber-electric-grinder.jpg?v=1778733042&width=700",
+    "file": "grinder.jpg",
+    "current_price": "29.99",
+    "display_name": "2-in-1 Dual-Chamber Electric Grinder",
+    "display_price": "29.99",
+    "price_source": "reference"
+  },
+  "blender": {
+    "handle": "portable-rechargeable-juicer-ipb-02",
+    "title": "Portable Electric Blender IPB-02",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/inkbird-portable-electric-blender-ipb-02.jpg?v=1775784209&width=700",
+    "file": "blender.jpg",
+    "current_price": "39.99",
+    "display_name": "Portable Electric Blender IPB-02",
+    "display_price": "29.99",
+    "price_source": "reference"
+  },
+  "itc312": {
+    "handle": "temperature-controller-itc-312",
+    "title": "Temperature Controller ITC-312",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/temperature-controller-itc-312-577971.png?v=1745376387&width=700",
+    "file": "itc312.png",
+    "current_price": "49.99",
+    "display_name": "Temperature Controller ITC-312",
+    "display_price": "49.99",
+    "price_source": "reference"
+  },
+  "c216t": {
+    "handle": "temperature-controller-c216t",
+    "title": "Temperature Controller C216T",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/temperature-controller-c216t-805265.jpg?v=1745376388&width=700",
+    "file": "c216t.jpg",
+    "current_price": "22.99",
+    "display_name": "Temperature Controller C216T",
+    "display_price": "22.99",
+    "price_source": "reference"
+  },
+  "c236t": {
+    "handle": "temperature-controller-c236t",
+    "title": "Temperature Controller C236T",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/temperature-controller-c236t-438816.jpg?v=1745376214&width=700",
+    "file": "c236t.jpg",
+    "current_price": "39.99",
+    "display_name": "Temperature Controller C236T",
+    "display_price": "39.99",
+    "price_source": "official_snapshot"
+  },
+  "itc308": {
+    "handle": "temperature-controller-itc-308-series",
+    "title": "Temperature Controller ITC-308 Series",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/temperature-controller-itc-308-series-659693.png?v=1745376388&width=700",
+    "file": "itc308.png",
+    "current_price": "35.99",
+    "display_name": "Temperature Controller ITC-308",
+    "display_price": "35.99",
+    "price_source": "official_snapshot"
+  },
+  "int12-reference": {
+    "handle": "wifi-bluetooth-meat-thermometer-int-12-bw",
+    "title": "WiFi Bluetooth Meat Thermometer INT-12-BW",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/wifi-bluetooth-meat-thermometer-int-12-bw-128317.jpg?v=1760675105&width=700",
+    "file": "int12-reference.jpg",
+    "display_name": "WiFi Bluetooth Meat Thermometer INT-12-BW",
+    "display_price": "97.99",
+    "price_source": "reference"
+  },
+  "int14-reference": {
+    "handle": "wifi-bluetooth-meat-thermometer-int-14-bw",
+    "title": "WiFi Bluetooth Meat Thermometer INT-14-BW",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/wifi-bluetooth-meat-thermometer-int-14-bw-sale-579733.jpg?v=1762402448&width=700",
+    "file": "int14-reference.jpg",
+    "display_name": "WiFi Bluetooth Meat Thermometer INT-14-BW",
+    "display_price": "139.99",
+    "price_source": "reference"
+  },
+  "int11x": {
+    "handle": "wireless-meat-thermometer-int-11x-b",
+    "title": "Meat Thermometer INT-11X-B",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/inkbird-bluetooth-meat-thermometer-int-11x-b.jpg?v=1776657998&width=700",
+    "file": "int11x.jpg",
+    "current_price": "99.99",
+    "display_name": "Bluetooth Meat Thermometer INT-11X-B",
+    "display_price": "99.99",
+    "price_source": "official_snapshot"
+  },
+  "int11p": {
+    "handle": "bluetooth-meat-thermometer-int-11p-b",
+    "title": "Bluetooth Meat Thermometer INT-11P-B",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/inkbird-bluetooth-meat-thermometer-int-11p-b_a4c08880-af74-4f74-9ed4-fb1f821c1366.jpg?v=1776051013&width=700",
+    "file": "int11p.jpg",
+    "current_price": "59.99",
+    "display_name": "Bluetooth Meat Thermometer INT-11P-B",
+    "display_price": "59.99",
+    "price_source": "official_snapshot"
+  },
+  "ith13": {
+    "handle": "bluetooth-hygrometer-thermometer-ith-13-b",
+    "title": "Bluetooth Hygrometer Thermometer ITH-13-B",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/bluetooth-hygrometer-thermometer-ith-13-b-938068.jpg?v=1745376224&width=700",
+    "file": "ith13.jpg",
+    "current_price": "25.99",
+    "display_name": "Bluetooth Hygrometer Thermometer ITH-13-B",
+    "display_price": "25.99",
+    "price_source": "reference"
+  },
+  "ith21": {
+    "handle": "bluetooth-hygrometer-thermometer-ith-21-b",
+    "title": "Bluetooth Hygrometer Thermometer ITH-21-B",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/bluetooth-hygrometer-thermometer-ith-21-b-823147.jpg?v=1745376223&width=700",
+    "file": "ith21.jpg",
+    "current_price": "19.99",
+    "display_name": "Bluetooth Hygrometer Thermometer ITH-21-B",
+    "display_price": "19.99",
+    "price_source": "reference"
+  },
+  "ibsth3": {
+    "handle": "inkbird-thermometer-hygrometer-ibs-th3-wifi-plus",
+    "title": "WiFi Hygrometer Thermometer IBS-TH3 WIFI PLUS",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/wifi-hygrometer-thermometer-ibs-th3-wifi-plus-403649.jpg?v=1745376222&width=700",
+    "file": "ibsth3.jpg",
+    "current_price": "29.99",
+    "display_name": "WiFi Hygrometer Thermometer IBS-TH3 WIFI PLUS",
+    "display_price": "29.99",
+    "price_source": "official_snapshot"
+  },
+  "ibspool": {
+    "handle": "remote-pool-thermometer-set-ibs-p02r",
+    "title": "Remote Pool Thermometer Set IBS-P02R",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/remote-pool-thermometer-set-ibs-p02r-252012.jpg?v=1745376232&width=700",
+    "file": "ibspool.jpg",
+    "current_price": "39.99",
+    "display_name": "Remote Pool Thermometer Set IBS-P02R",
+    "display_price": "39.99",
+    "price_source": "official_snapshot"
+  },
+  "isv200": {
+    "handle": "wifi-sous-vide-cooker-isv-200w",
+    "title": "WiFi Sous Vide Cooker ISV-200W",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/7_840028e2-984f-4726-bf1b-bcc92cb4f234.jpg?v=1779434865&width=700",
+    "file": "isv200.jpg",
+    "current_price": "125.99",
+    "display_name": "INKBIRD Culinary Sous Vide ISV-200W",
+    "display_price": "89.99",
+    "price_source": "reference"
+  },
+  "isv100": {
+    "handle": "wifi-sous-vide-cooker-isv-100w",
+    "title": "WiFi Sous Vide Cooker ISV-100W",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/WiFi-Sous-Vide-Cooker-ISV-100W.jpg?v=1654508165&width=700",
+    "file": "isv100.jpg",
+    "current_price": "125.99",
+    "display_name": "WiFi Sous Vide Cooker ISV-100W",
+    "display_price": "125.99",
+    "price_source": "official_snapshot"
+  },
+  "ssv103": {
+    "handle": "wifi-sous-vide-cooker-isv-300w",
+    "title": "WiFi Sous Vide Cooker SSV-103-W",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/1_20012f6e-c66e-4c6a-9630-51c172466751.jpg?v=1785751409&width=700",
+    "file": "ssv103.jpg",
+    "display_name": "WiFi Sous Vide Cooker SSV-103-W",
+    "display_price": "150.99",
+    "price_source": "official_snapshot",
+    "current_price": "150.99"
+  },
+  "promo-banner": {
+    "file": "promo-banner.png",
+    "source": "Generated reconstruction of the user-supplied shop screenshot banner; not an original INKBIRD source image."
+  },
+  "int33": {
+    "handle": "wifi-bluetooth-meat-thermometer-int-33-bw",
+    "title": "Meat Thermometer INT-33-BW",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/1_a2e7f3d5-f9c3-44f0-8798-981f9f456fb1.jpg?v=1783061440&width=700",
+    "file": "int33.jpg",
+    "current_price": "119.99",
+    "display_name": "WiFi Bluetooth Meat Thermometer INT-33-BW",
+    "display_price": "119.99",
+    "price_source": "official_snapshot"
+  },
+  "int11c": {
+    "handle": "wireless-dual-sensor-meat-thermometer-int-11c-b",
+    "title": "Meat Thermometer INT-11C-B",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/1-2_1a8b7b69-51f1-48f6-a0c2-039d1132c40e.jpg?v=1774406726&width=700",
+    "file": "int11c.jpg",
+    "current_price": "55.99",
+    "display_name": "Bluetooth Meat Thermometer INT-11C-B",
+    "display_price": "55.99",
+    "price_source": "official_snapshot"
+  },
+  "isv300-reference": {
+    "handle": "wifi-sous-vide-cooker-isv-300w-1",
+    "title": "WiFi Sous Vide Cooker ISV-300W",
+    "source": "https://cdn.shopify.com/s/files/1/0067/6950/8415/files/wifi-sous-vide-cooker-isv-300w-600323.jpg?v=1768379035&width=700",
+    "file": "isv300-reference.jpg",
+    "current_price": "150.99",
+    "display_name": "WiFi Sous Vide Cooker ISV-300W",
+    "display_price": "120.99",
+    "price_source": "reference"
+  }
+}

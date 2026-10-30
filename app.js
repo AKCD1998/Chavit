@@ -31,11 +31,11 @@ const labels={smart:'สมาร์ท',shop:'ร้านค้า',community:
 document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{
  closeDeviceMenu();
  document.querySelectorAll('[data-nav]').forEach(x=>{x.classList.toggle('selected',x===b);if(x===b)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});
- const home=b.dataset.nav==='home',me=b.dataset.nav==='me',smart=b.dataset.nav==='smart';
- $('#home-page').hidden=!home;$('#me-page').hidden=!me;$('#smart-page').hidden=!smart;$('#other-page').hidden=home||me||smart;
- document.querySelector('.app-shell').classList.toggle('me-active',me);document.querySelector('.app-shell').classList.toggle('smart-active',smart);document.querySelector('[data-dialog=add]').setAttribute('aria-label',smart?'เพิ่มสมาร์ท':'เพิ่มอุปกรณ์');
+ const home=b.dataset.nav==='home',me=b.dataset.nav==='me',smart=b.dataset.nav==='smart',shop=b.dataset.nav==='shop';
+ $('#home-page').hidden=!home;$('#me-page').hidden=!me;$('#smart-page').hidden=!smart;$('#shop-page').hidden=!shop;$('#shop-support').hidden=!shop;$('#other-page').hidden=home||me||smart||shop;
+ document.querySelector('.app-shell').classList.toggle('me-active',me);document.querySelector('.app-shell').classList.toggle('smart-active',smart);document.querySelector('.app-shell').classList.toggle('shop-active',shop);document.querySelector('[data-dialog=add]').setAttribute('aria-label',smart?'เพิ่มสมาร์ท':'เพิ่มอุปกรณ์');
  $('#me-page').classList.remove('profile-collapsed');
- if(!home&&!me&&!smart)$('#other-page').innerHTML=`<h1>${labels[b.dataset.nav]}</h1><p>หน้าจอนี้อยู่ระหว่างเตรียม mockup</p>`;
+ if(!home&&!me&&!smart&&!shop)$('#other-page').innerHTML=`<h1>${labels[b.dataset.nav]}</h1><p>หน้าจอนี้อยู่ระหว่างเตรียม mockup</p>`;
  $('#main').scrollTop=0;
 });
 setTimeout(()=>$('#splash').classList.add('hidden'),900);

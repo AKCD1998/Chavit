@@ -5,8 +5,8 @@ android {
     defaultConfig { applicationId 'com.inhouse.lnkblrd'; minSdk 26; targetSdk 34; versionCode 1; versionName '0.1.0' }
     sourceSets { main { assets.srcDirs = ['build/generated/mockupAssets'] } }
 }
-tasks.register('syncMockup', Copy) {
-    from(rootProject.file('..')) { include 'index.html', 'style.css', 'app.js', 'weather.js', 'assets/**' }
+tasks.register('syncMockup', Sync) {
+    from(rootProject.file('..')) { include 'index.html', 'style.css', 'app.js', 'weather.js', 'shop.js', 'assets/**' }
     into layout.buildDirectory.dir('generated/mockupAssets')
 }
 tasks.named('preBuild').configure { dependsOn 'syncMockup' }
