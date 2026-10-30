@@ -67,7 +67,7 @@
   const from=page.hidden?'translateX(100%)':getComputedStyle(page).transform;
   const version=++navigationVersion;weatherClosing=false;
   if(navigationAnimation)navigationAnimation.cancel();
-  document.title='สภาพอากาศ — lNKBlRD';document.querySelector('.app-shell').classList.add('weather-detail-open');
+  document.title='สภาพอากาศ — lNKBlRD';document.querySelector('.app-shell').classList.remove('weather-detail-closing');document.querySelector('.app-shell').classList.add('weather-detail-open');
   page.hidden=false;setHomeInert(true);page.focus({preventScroll:true});
   const animation=slidePage(from,'translateX(0)');navigationAnimation=animation;
   animation.finished.then(()=>{if(version===navigationVersion){animation.cancel();navigationAnimation=null}}).catch(()=>{});
@@ -83,11 +83,12 @@
   const page=document.getElementById('weather-details');if(page.hidden)return;
   const from=getComputedStyle(page).transform,version=++navigationVersion;weatherClosing=true;
   if(navigationAnimation)navigationAnimation.cancel();
+  document.title='lNKBlRD';document.querySelector('.app-shell').classList.add('weather-detail-closing');
   const animation=slidePage(from,'translateX(100%)');navigationAnimation=animation;
   animation.finished.then(()=>{
    if(version!==navigationVersion)return;
    page.hidden=true;animation.cancel();navigationAnimation=null;weatherClosing=false;
-   document.title='lNKBlRD';document.querySelector('.app-shell').classList.remove('weather-detail-open');setHomeInert(false);
+   document.title='lNKBlRD';document.querySelector('.app-shell').classList.remove('weather-detail-open','weather-detail-closing');setHomeInert(false);
    document.querySelector('.weather-overview').focus({preventScroll:true});
   }).catch(()=>{});
  }

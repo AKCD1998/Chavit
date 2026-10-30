@@ -69,7 +69,7 @@ header .location .chevron{flex-shrink:0}
 #weather-details[hidden]{display:none}
 
 
-.weather-detail-open>.statusbar{background:#248dbb;color:#263e48}
+.weather-detail-open>.statusbar{color:#263e48}
 #weather-details{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;color:white;outline:none}
 #weather-details::-webkit-scrollbar{display:none}
 .weather-detail-header{height:52px;display:flex;align-items:center;position:relative;justify-content:center;padding:0 40px}
@@ -130,3 +130,8 @@ header .location .chevron{flex-shrink:0}
 #device-menu>button+button{border-top:1px solid #f6f7f7}
 #device-menu svg{flex-shrink:0;width:19px;height:21px;stroke-width:1.8;color:#4b565a}
 #device-menu>button:focus-visible{outline:2px solid #0087aa;outline-offset:-3px;border-radius:6px}
+
+.statusbar{position:relative;z-index:0;isolation:isolate;overflow:hidden;background:#f4f4f4}
+.statusbar::before{content:"";position:absolute;inset:0;z-index:-1;background:#248dbb;transform:translateX(100%);transition:transform 300ms cubic-bezier(.22,.7,.2,1);pointer-events:none}
+.weather-detail-open:not(.weather-detail-closing)>.statusbar::before{transform:translateX(0)}
+@media(prefers-reduced-motion:reduce){.statusbar::before{transition-duration:0ms}}
