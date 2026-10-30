@@ -55,16 +55,42 @@
   }
   detail('weather-status').textContent='อัปเดต '+c.time.replace('T',' ')+' (เวลาไทย)';document.getElementById('weather-retry').hidden=true;
  }
+ let navigationAnimation=null,navigationVersion=0,weatherClosing=false;
+ function setHomeInert(inert){document.querySelectorAll('.app-shell>header,.app-shell>main,.app-shell>.bottom-nav').forEach(element=>{element.inert=inert;if(inert)element.setAttribute('aria-hidden','true');else element.removeAttribute('aria-hidden')})}
+ function slidePage(from,to){
+  const page=document.getElementById('weather-details');
+  const duration=window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:300;
+  return page.animate([{transform:from},{transform:to}],{duration,easing:'cubic-bezier(.22,.7,.2,1)',fill:'both'});
+ }
  function displayDetails(){
+  const page=document.getElementById('weather-details');
+  const from=page.hidden?'translateX(100%)':getComputedStyle(page).transform;
+  const version=++navigationVersion;weatherClosing=false;
+  if(navigationAnimation)navigationAnimation.cancel();
   document.title='สภาพอากาศ — lNKBlRD';document.querySelector('.app-shell').classList.add('weather-detail-open');
-  const page=document.getElementById('weather-details');page.hidden=false;page.focus({preventScroll:true});
+  page.hidden=false;setHomeInert(true);page.focus({preventScroll:true});
+  const animation=slidePage(from,'translateX(0)');navigationAnimation=animation;
+  animation.finished.then(()=>{if(version===navigationVersion){animation.cancel();navigationAnimation=null}}).catch(()=>{});
   if(!lastSuccess)refresh();
  }
  window.closeWeatherDetails=()=>{
   if(document.getElementById('weather-details').hidden)return false;
+  if(weatherClosing)return true;
+  weatherClosing=true;
   if(location.hash==='#weather')history.back();else hideDetails();return true;
  };
- function hideDetails(){document.title='lNKBlRD';document.getElementById('weather-details').hidden=true;document.querySelector('.app-shell').classList.remove('weather-detail-open');document.querySelector('.weather-overview').focus({preventScroll:true})}
+ function hideDetails(){
+  const page=document.getElementById('weather-details');if(page.hidden)return;
+  const from=getComputedStyle(page).transform,version=++navigationVersion;weatherClosing=true;
+  if(navigationAnimation)navigationAnimation.cancel();
+  const animation=slidePage(from,'translateX(100%)');navigationAnimation=animation;
+  animation.finished.then(()=>{
+   if(version!==navigationVersion)return;
+   page.hidden=true;animation.cancel();navigationAnimation=null;weatherClosing=false;
+   document.title='lNKBlRD';document.querySelector('.app-shell').classList.remove('weather-detail-open');setHomeInert(false);
+   document.querySelector('.weather-overview').focus({preventScroll:true});
+  }).catch(()=>{});
+ }
  function openDetails(){if(location.hash!=='#weather')history.pushState({weather:true},'',location.pathname+location.search+'#weather');displayDetails()}
  document.querySelector('.weather-overview').addEventListener('click',openDetails);
  document.querySelector('.weather-overview').addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openDetails()}});

@@ -67,8 +67,8 @@ header .location .chevron{flex-shrink:0}
 
 .weather-overview[role=button]{cursor:pointer}.weather-overview:focus-visible{outline:2px solid #0085a7;outline-offset:-3px}
 #weather-details[hidden]{display:none}
-.app-shell.weather-detail-open{background:linear-gradient(#248dbb,#1b7499)}
-.weather-detail-open>header,.weather-detail-open>main,.weather-detail-open>.bottom-nav{display:none}
+
+
 .weather-detail-open>.statusbar{background:#248dbb;color:#263e48}
 #weather-details{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;color:white;outline:none}
 #weather-details::-webkit-scrollbar{display:none}
@@ -120,3 +120,7 @@ header .location .chevron{flex-shrink:0}
 .weather-detail-footer a{color:inherit}.weather-detail-footer button{color:white;border:1px solid #c8e1eb;border-radius:6px;padding:4px 10px}
 .forecast-loading{font-size:13px;color:#7d9299;padding-bottom:15px}
 @media(max-width:370px){.solar-panel>strong{font-size:24px}.weather-metric-grid>.weather-panel{padding-left:14px;padding-right:14px}.forecast-row .forecast-day{font-size:15px}.forecast-row{font-size:18px}.feels-panel h2{font-size:11px}}
+
+.app-shell{position:relative}
+#weather-details{position:absolute;inset:34px 0 49px;z-index:3;background:linear-gradient(#248dbb,#1b7499);box-shadow:-8px 0 24px #0002;will-change:transform}
+.native #weather-details{inset:0}
