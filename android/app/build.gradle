@@ -6,7 +6,7 @@ android {
     sourceSets { main { assets.srcDirs = ['build/generated/mockupAssets'] } }
 }
 tasks.register('syncMockup', Copy) {
-    from(rootProject.file('..')) { include 'index.html', 'style.css', 'app.js', 'assets/**' }
+    from(rootProject.file('..')) { include 'index.html', 'style.css', 'app.js', 'weather.js', 'assets/**' }
     into layout.buildDirectory.dir('generated/mockupAssets')
 }
 tasks.named('preBuild').configure { dependsOn 'syncMockup' }

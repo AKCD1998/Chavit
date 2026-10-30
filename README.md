@@ -1,12 +1,12 @@
 # lNKBlRD — in-house Android mockup
 
-Offline, interactive prototype of the supplied INKBIRD home screen. No backend, account login, real telemetry, Bluetooth/Wi-Fi pairing, store publishing, or network permissions.
+Interactive prototype of the supplied INKBIRD home screen. No backend, account login, real telemetry, Bluetooth/Wi-Fi pairing, store publishing, or backend accounts.
 
 ## Preview
 
 Run `python3 -m http.server 4173` from this folder, then open http://localhost:4173 at a 393 × 852 mobile viewport. Desktop preview includes simulated Android status/navigation bars. Android uses the real system bars.
 
-The launch screen uses the approved recolored logo. The initial home screen shows the promotional banner, mock weather card (30°C, sunny, sunset 05:53 p.m., sunrise 06:13 a.m., ตำบล แม่กลอง), room tabs and five device cards. The mock advertisement can be dismissed with its close button while the weather card stays visible. Weather values are static fixtures, not live data. All Devices shows the five cards. Living Room, Master Bedroom and Second Bedroom each show the reference empty-room illustration and Thai message, beneath the full weather card. Only the advertisement is hidden in room views; it stays dismissed after returning to All Devices if manually closed. The scanner asks for confirmation, then requests camera access and displays a live preview. It does not yet decode QR codes. Cards, house selection, add controls and bottom navigation open mock UI; device readings and pairing are deliberately unimplemented.
+The launch screen uses the approved recolored logo. The initial home screen shows the promotional banner, live outdoor weather card for ตำบลแม่กลอง, room tabs and five device cards. The mock advertisement can be dismissed with its close button while the weather card stays visible. Weather is fetched from Open-Meteo for latitude 13.409, longitude 100.002, refreshed every 15 minutes and displayed in Asia/Bangkok time. This is current model-based outdoor weather, not indoor device telemetry. Humidity, WMO condition icons and sunrise/sunset are live. The location remains Mae Klong for all mock houses pending verified coordinates. Failed initial loads show dashes; failed refreshes mark retained readings as old data. All Devices shows the five cards. Living Room, Master Bedroom and Second Bedroom each show the reference empty-room illustration and Thai message, beneath the full weather card. Only the advertisement is hidden in room views; it stays dismissed after returning to All Devices if manually closed. The scanner asks for confirmation, then requests camera access and displays a live preview. It does not yet decode QR codes. Cards, house selection, add controls and bottom navigation open mock UI; device readings and pairing are deliberately unimplemented.
 
 ## Android APK
 
@@ -19,7 +19,7 @@ gradle assembleDebug
 
 Output: `android/app/build/outputs/apk/debug/app-debug.apk`. Install on Android 8.0+ with `adb install -r app-debug.apk` or transfer the APK to the phone and permit installation from that source. The application ID is `com.inhouse.lnkblrd`; display name is `lNKBlRD`.
 
-The WebView loads bundled assets from an intercepted HTTPS origin, blocks external resources, and requests only camera permission, on confirmation of the scan prompt. No microphone, storage, Bluetooth, location, or network permission is requested. All app UI resources are local. Android WebView must be current enough to support HTML dialog elements.
+The WebView loads bundled assets from an intercepted HTTPS origin, allows only the Open-Meteo forecast endpoint for external data, and requests only camera permission, on confirmation of the scan prompt. Internet permission enables weather access; no microphone, storage, Bluetooth, or location permission is requested. All app UI resources are local. Weather requires Internet. Android WebView must be current enough to support HTML dialog elements.
 
 ## Visual fidelity
 

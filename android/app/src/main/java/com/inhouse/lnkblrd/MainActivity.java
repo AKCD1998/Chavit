@@ -16,6 +16,7 @@ public class MainActivity extends Activity {
         web.setWebViewClient(new WebViewClient() {
             @Override public android.webkit.WebResourceResponse shouldInterceptRequest(WebView view, android.webkit.WebResourceRequest request) {
                 android.net.Uri uri = request.getUrl();
+                if ("https".equals(uri.getScheme()) && "api.open-meteo.com".equals(uri.getHost()) && (uri.getPort() == -1 || uri.getPort() == 443) && "/v1/forecast".equals(uri.getPath())) return null;
                 if (!"https".equals(uri.getScheme()) || !"app.local".equals(uri.getHost())) return new android.webkit.WebResourceResponse("text/plain", "UTF-8", new java.io.ByteArrayInputStream(new byte[0]));
                 String path = uri.getPath();
                 if (path == null || path.contains("..")) return null;

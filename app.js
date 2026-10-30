@@ -4,8 +4,6 @@ if(new URLSearchParams(location.search).has('native'))document.body.classList.ad
 function toast(text){$('#toast').textContent=text;$('#toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),2400)}
 function showDialog(html){$('#dialog-content').innerHTML=html;$('#dialog').showModal()}
 function render(){const root=$('#devices');const isRoom=room!=='all';root.replaceChildren();root.hidden=isRoom;$('#room-empty').hidden=!isRoom;$('#intro').hidden=false;$('#banner').hidden=isRoom||adDismissed;$('#home-page').classList.toggle('room-mode',isRoom);if(isRoom)return;devices.forEach((d,i)=>{const card=document.createElement('button');card.className='device'+(d.disabled?' disabled':'');card.innerHTML=`${d.alarm?'<span class="alarm-dot" aria-label="มีการแจ้งเตือน"></span>':''}<img class="sensor" src="assets/sensor.svg" alt="เซ็นเซอร์อุณหภูมิ"><p class="name">${d.name}</p><p class="state">${d.state}</p>`;card.onclick=()=>showDialog(`<h2>${d.name}</h2><img class="sensor" src="assets/sensor.svg" alt="เซ็นเซอร์"><p>สถานะ: ${d.state}</p><p>${d.alarm?'มีการแจ้งเตือน':''}</p><small>ข้อมูลจำลอง · ยังไม่ได้เชื่อมต่ออุปกรณ์จริง</small>`);root.append(card)})}
-const mockWeather={temperature:30,condition:'แดดจัด',sunset:'05:53 p.m.',sunrise:'06:13 a.m.',location:'ตำบล แม่กลอง'};
-for(const [key,value] of Object.entries(mockWeather))$('#mock-'+key).textContent=value;
 render();
 $('#close-banner').onclick=()=>{adDismissed=true;$('#banner').hidden=true};
 const houses=[{id:'003',name:'วัดช่องลม'},{id:'004',name:'ตลาดบางน้อย'},{id:'001',name:'ตลาดแม่กลอง'}];
