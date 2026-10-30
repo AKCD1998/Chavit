@@ -1,1 +1,29 @@
-
+<!doctype html>
+<html lang="th"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f4f4f4"><title>lNKBlRD</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<svg class="svg-library" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="home" viewBox="0 0 32 32"><path d="M3 15 16 3l13 12h-4v13h-7v-8h-5v8H7V15Z"/><path d="M10 18q7-5 8 6" fill="none" stroke="white" stroke-width="2"/></symbol>
+<symbol id="scan" viewBox="0 0 32 32"><path d="M12 3H8a5 5 0 0 0-5 5v4m17-9h4a5 5 0 0 1 5 5v4M3 20v4a5 5 0 0 0 5 5h4m8 0h4a5 5 0 0 0 5-5v-4M3 15h26m-26 5h26"/></symbol>
+<symbol id="plus" viewBox="0 0 32 32"><path d="M16 3v26M3 16h26"/></symbol>
+<symbol id="smart" viewBox="0 0 32 32"><path d="m15 8-4-4a3 3 0 0 0-4 0l-5 5a3 3 0 0 0 0 4l12 12a3 3 0 0 0 4 0l5-5a3 3 0 0 0 0-4l-4-4m-3 8 4 4a3 3 0 0 0 4 0l6-6a3 3 0 0 0 0-4L18 2a3 3 0 0 0-4 0l-5 5a3 3 0 0 0 0 4l4 4" transform="translate(1 3) scale(.9)"/></symbol>
+<symbol id="cart" viewBox="0 0 32 32"><path d="M2 3h5l3 19h17l3-14H9"/><circle cx="12" cy="28" r="1.5"/><circle cx="25" cy="28" r="1.5"/></symbol>
+<symbol id="chat" viewBox="0 0 32 32"><path d="M19 20H9l-6 6V5a3 3 0 0 1 3-3h16a3 3 0 0 1 3 3v3M15 9h13a2 2 0 0 1 2 2v17l-6-5h-9a2 2 0 0 1-2-2V11a2 2 0 0 1 2-2Z"/></symbol>
+<symbol id="user" viewBox="0 0 32 32"><circle cx="16" cy="8" r="6"/><path d="M4 29v-5c0-10 24-10 24 0v5Z"/></symbol>
+</defs></svg>
+<div id="splash" aria-label="lNKBlRD"><img src="assets/splash.png" alt="lNKBlRD โลโก้เขียวและน้ำเงิน"></div>
+<div class="app-shell">
+<div class="statusbar" aria-hidden="true"><b>15:29</b><span class="status-notices">▲ ▣ ◒ •</span><span class="status-connect">◉ ▴▥ <b class="battery">63</b></span></div>
+<header><button class="location" id="location">001 ตลาด... <span class="chevron"></span></button><div class="header-actions"><button class="icon-button" aria-label="สแกน" data-dialog="scan"><svg><use href="#scan"/></svg></button><button class="icon-button" aria-label="เพิ่มอุปกรณ์" data-dialog="add"><svg><use href="#plus"/></svg></button></div></header>
+<main id="main">
+<section id="home-page">
+<div class="intro" id="intro"><div class="banner" id="banner"><img src="assets/home-banner.jpg" alt="บ้านท่ามกลางสวน"><div class="banner-shade"></div><div class="banner-copy"><span>S</span>mart <span>T</span>ech, <span>S</span>mart <span>H</span>ome<br><span>S</span>mart <span>L</span>iving</div><button id="close-banner" aria-label="ปิดแบนเนอร์">×</button></div>
+<div class="network" id="network"><div class="warning">!</div><p>โปรดตรวจสอบเครือข่ายหรือสถานที่ทางภูมิศาสตร์ของคุณ</p><div class="network-actions"><button id="refresh">รีเฟรช</button><button id="go">GO</button></div></div></div>
+<div class="room-row"><div class="room-tabs" role="tablist" aria-label="ห้อง"><button role="tab" aria-selected="true" data-room="all" class="active">ทุกอุปกรณ์</button><button role="tab" aria-selected="false" data-room="living">Living Room</button><button role="tab" aria-selected="false" data-room="master">Master Room</button></div><button class="more" aria-label="จัดการห้อง" data-dialog="rooms">•••</button></div>
+<div class="devices" id="devices"></div>
+</section><section id="other-page" hidden></section>
+</main>
+<nav class="bottom-nav" aria-label="เมนูหลัก"><button class="selected" data-nav="home"><svg><use href="#home"/></svg><span>หน้าแรก</span></button><button data-nav="smart"><svg><use href="#smart"/></svg><span>สมาร์ท</span></button><button data-nav="shop"><svg><use href="#cart"/></svg><span>ร้านค้า</span></button><button data-nav="community"><svg><use href="#chat"/></svg><span>ชุมชน</span></button><button data-nav="me"><svg><use href="#user"/></svg><span>ฉัน</span></button></nav>
+<div class="system-nav" aria-hidden="true"><span>Ⅲ</span><span class="system-home"></span><span class="system-back"></span></div>
+</div>
+<dialog id="dialog"><button id="dialog-close" aria-label="ปิด">×</button><div id="dialog-content"></div></dialog><div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script></body></html>
