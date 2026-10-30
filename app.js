@@ -25,17 +25,17 @@ $('#house-picker').addEventListener('click',event=>{if(event.target!==$('#house-
 $('#manage-houses').onclick=()=>{$('#house-picker').close();showDialog('<h2>จัดการบ้าน</h2>'+houses.map(h=>'<p>'+h.id+' '+h.name+'</p>').join('')+'<small>หน้าจอจำลองการจัดการบ้าน</small>')};
 document.querySelectorAll('[data-room]').forEach(button=>button.onclick=()=>{room=button.dataset.room;document.querySelectorAll('[data-room]').forEach(x=>{x.classList.toggle('active',x===button);x.setAttribute('aria-selected',String(x===button))});render();button.scrollIntoView({block:'nearest',inline:'nearest'});$('#main').scrollTop=0});
 const dialogs={add:'<h2>เพิ่มอุปกรณ์</h2><p>เซ็นเซอร์อุณหภูมิและความชื้น</p><small>ขั้นตอนจับคู่อุปกรณ์จะเพิ่มในรอบถัดไป</small>',rooms:'<h2>จัดการห้อง</h2><p>ทุกอุปกรณ์</p><p>Living Room</p><p>Master Bedroom</p><p>Second Bedroom</p>'};
-document.querySelectorAll('[data-dialog]').forEach(b=>b.onclick=()=>{if(b.dataset.dialog==='scan')$('#camera-permission').showModal();else showDialog(dialogs[b.dataset.dialog])});
+document.querySelectorAll('[data-dialog]').forEach(b=>b.onclick=()=>{if(b.dataset.dialog==='scan')$('#camera-permission').showModal();else if(b.dataset.dialog==='add'&&document.querySelector('.app-shell').classList.contains('smart-active'))showDialog('<h2>'+($('.smart-tabs .active').dataset.smartTab==='auto'?'เพิ่มระบบอัตโนมัติ':'เพิ่มการแตะเพื่อเรียกใช้')+'</h2>');else showDialog(dialogs[b.dataset.dialog])});
 $('#dialog-close').onclick=()=>$('#dialog').close();$('#dialog').onclick=e=>{if(e.target===$('#dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}};
 const labels={smart:'สมาร์ท',shop:'ร้านค้า',community:'ชุมชน',me:'ฉัน'};
 document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{
  closeDeviceMenu();
  document.querySelectorAll('[data-nav]').forEach(x=>{x.classList.toggle('selected',x===b);if(x===b)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});
- const home=b.dataset.nav==='home',me=b.dataset.nav==='me';
- $('#home-page').hidden=!home;$('#me-page').hidden=!me;$('#other-page').hidden=home||me;
- document.querySelector('.app-shell').classList.toggle('me-active',me);
+ const home=b.dataset.nav==='home',me=b.dataset.nav==='me',smart=b.dataset.nav==='smart';
+ $('#home-page').hidden=!home;$('#me-page').hidden=!me;$('#smart-page').hidden=!smart;$('#other-page').hidden=home||me||smart;
+ document.querySelector('.app-shell').classList.toggle('me-active',me);document.querySelector('.app-shell').classList.toggle('smart-active',smart);document.querySelector('[data-dialog=add]').setAttribute('aria-label',smart?'เพิ่มสมาร์ท':'เพิ่มอุปกรณ์');
  $('#me-page').classList.remove('profile-collapsed');
- if(!home&&!me)$('#other-page').innerHTML=`<h1>${labels[b.dataset.nav]}</h1><p>หน้าจอนี้อยู่ระหว่างเตรียม mockup</p>`;
+ if(!home&&!me&&!smart)$('#other-page').innerHTML=`<h1>${labels[b.dataset.nav]}</h1><p>หน้าจอนี้อยู่ระหว่างเตรียม mockup</p>`;
  $('#main').scrollTop=0;
 });
 setTimeout(()=>$('#splash').classList.add('hidden'),900);
@@ -111,4 +111,16 @@ document.querySelectorAll('[data-profile-action]').forEach(button=>button.onclic
   $('#profile-save').onclick=()=>{const name=input.value.trim()||'แตะเพื่อตั้งชื่อของคุณ';document.querySelectorAll('.profile-name').forEach(element=>element.textContent=name);$('#dialog').close()};input.focus();
  }else if(action==='homes'){showDialog('<h2>การจัดการบ้าน</h2>'+houses.map(h=>'<p>'+h.id+' '+h.name+'</p>').join(''))}
  else showDialog('<h2>'+profileActionLabels[action]+'</h2>'+(action==='about'?'<p>lNKBlRD</p><p>เวอร์ชัน 0.1.0</p>':''));
+});
+
+function selectSmartTab(button){
+ const automatic=button.dataset.smartTab==='auto';
+ document.querySelectorAll('[data-smart-tab]').forEach(tab=>{tab.classList.toggle('active',tab===button);tab.setAttribute('aria-selected',String(tab===button));tab.tabIndex=tab===button?0:-1});
+ $('#smart-empty-panel').setAttribute('aria-labelledby',button.id);
+ $('#smart-empty-image').src=automatic?'assets/smart-auto.svg':'assets/smart-tap.svg';
+ $('#smart-empty-message').textContent=automatic?'ยังไม่มีการเพิ่มการตั้งค่าอัตโนมัติ':'ยังไม่มีการเพิ่มการตั้งค่าแบบคลิกเดียว';
+}
+document.querySelectorAll('[data-smart-tab]').forEach(button=>{
+ button.onclick=()=>selectSmartTab(button);
+ button.addEventListener('keydown',event=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){event.preventDefault();const tabs=[...document.querySelectorAll('[data-smart-tab]')],target=event.key==='Home'?tabs[0]:event.key==='End'?tabs[1]:tabs[1-tabs.indexOf(button)];selectSmartTab(target);target.focus()}});
 });

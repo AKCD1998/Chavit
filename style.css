@@ -173,3 +173,15 @@ header .location .chevron{flex-shrink:0}
 #profile-save{background:#0086ad;color:white;padding:9px 20px;border-radius:8px;float:right}
 @media(prefers-reduced-motion:reduce){.profile-compact-inner{transition:none}}
 @media(max-width:370px){.profile-row{font-size:14px;gap:10px}.profile-identity strong{font-size:21px}.profile-content{padding-left:14px;padding-right:14px}}
+
+#smart-page[hidden]{display:none}
+.smart-active,.smart-active>.statusbar{background:#f4f3f9}
+.smart-active>header{height:100px;padding-top:32px}
+.smart-active>header [data-dialog=scan]{display:none}
+.smart-tabs{display:flex;align-items:center;gap:22px;height:34px;padding:0 27px;white-space:nowrap}
+.smart-tabs button{padding:0;color:#c5c9cb;font-size:15px;font-weight:700}
+.smart-tabs .active{color:#0088ae}
+.smart-empty{text-align:center;padding:194px 15px 40px}
+.smart-empty img{display:block;width:106px;height:112px;object-fit:contain;margin:0 auto}
+.smart-empty p{font-size:14px;line-height:23px;font-weight:700;color:#171b1c;margin:25px 0 0}
+@media(max-width:370px){.smart-tabs{padding:0 23px;gap:20px}.smart-tabs button{font-size:14px}.smart-empty{padding-top:180px}.smart-empty p{font-size:13px}}
