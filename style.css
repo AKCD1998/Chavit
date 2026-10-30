@@ -124,3 +124,9 @@ header .location .chevron{flex-shrink:0}
 .app-shell{position:relative}
 #weather-details{position:absolute;inset:34px 0 49px;z-index:3;background:linear-gradient(#248dbb,#1b7499);box-shadow:-8px 0 24px #0002;will-change:transform}
 .native #weather-details{inset:0}
+
+#device-menu{position:fixed;inset:auto;margin:0;padding:0 15px;border:0;border-radius:22px;width:180px;max-width:calc(100vw - 24px);max-height:calc(100dvh - 70px);overflow-y:auto;background:#fff;color:#121716;box-shadow:0 2px 15px #24364012;z-index:15;transform-origin:top right}
+#device-menu>button{display:flex;align-items:center;gap:11px;width:100%;min-height:76px;text-align:left;padding:12px 0;font-size:15px;font-weight:700;white-space:nowrap}
+#device-menu>button+button{border-top:1px solid #f6f7f7}
+#device-menu svg{flex-shrink:0;width:19px;height:21px;stroke-width:1.8;color:#4b565a}
+#device-menu>button:focus-visible{outline:2px solid #0087aa;outline-offset:-3px;border-radius:6px}

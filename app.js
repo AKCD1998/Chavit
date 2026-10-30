@@ -63,3 +63,31 @@ $('#camera-confirm').onclick=async()=>{
 };
 document.addEventListener('visibilitychange',()=>{if(document.hidden)closeCamera()});
 window.addEventListener('pagehide',closeCamera);
+
+const deviceMenu=$('#device-menu'),deviceMenuToggle=$('#device-menu-toggle');
+function closeDeviceMenu(restoreFocus=false){if(deviceMenu.open)deviceMenu.close();deviceMenuToggle.setAttribute('aria-expanded','false');if(restoreFocus)deviceMenuToggle.focus({preventScroll:true})}
+deviceMenuToggle.onclick=()=>{
+ if(deviceMenu.open){closeDeviceMenu();return}
+ const trigger=deviceMenuToggle.getBoundingClientRect(),shell=document.querySelector('.app-shell').getBoundingClientRect();
+ deviceMenu.style.visibility='hidden';deviceMenu.show();
+ const rect=deviceMenu.getBoundingClientRect(),left=Math.max(shell.left+12,Math.min(trigger.right-rect.width-6,shell.right-rect.width-12));
+ const top=Math.max(8,Math.min(trigger.bottom-5,innerHeight-rect.height-58));
+ deviceMenu.style.left=left+'px';deviceMenu.style.top=top+'px';deviceMenu.style.visibility='';deviceMenuToggle.setAttribute('aria-expanded','true');deviceMenu.querySelector('button').focus({preventScroll:true});
+ if(!matchMedia('(prefers-reduced-motion: reduce)').matches)deviceMenu.animate([{opacity:0,transform:'translateY(-6px) scale(.96)'},{opacity:1,transform:'translateY(0) scale(1)'}],{duration:160,easing:'ease-out'});
+};
+deviceMenu.addEventListener('close',()=>deviceMenuToggle.setAttribute('aria-expanded','false'));
+document.addEventListener('pointerdown',event=>{if(deviceMenu.open&&!deviceMenu.contains(event.target)&&!deviceMenuToggle.contains(event.target))closeDeviceMenu()});
+deviceMenu.addEventListener('keydown',event=>{
+ if(event.key==='Escape'){event.preventDefault();closeDeviceMenu(true)}
+ if(event.key==='ArrowDown'||event.key==='ArrowUp'){event.preventDefault();const items=[...deviceMenu.querySelectorAll('button')],current=items.indexOf(document.activeElement);items[(current+(event.key==='ArrowDown'?1:-1)+items.length)%items.length].focus()}
+ if(event.key==='Tab')closeDeviceMenu();
+});
+$('#main').addEventListener('scroll',()=>closeDeviceMenu(),{passive:true});
+window.addEventListener('resize',()=>closeDeviceMenu());
+document.querySelectorAll('[data-device-menu]').forEach(button=>button.onclick=()=>{
+ closeDeviceMenu();
+ const action=button.dataset.deviceMenu;
+ if(action==='rooms')showDialog(dialogs.rooms);
+ else if(action==='details')showDialog('<h2>ใช้เป็นข้อมูล</h2>'+devices.map(device=>'<p>'+device.name+' · '+device.state+'</p>').join(''));
+ else showDialog('<h2>ลำดับอุปกรณ์</h2>'+devices.map((device,index)=>'<p>'+(index+1)+'. '+device.name+'</p>').join(''));
+});
