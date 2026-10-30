@@ -35,3 +35,15 @@
 
 .room-mode #intro{padding-top:10px}
 .room-mode #room-empty{padding-top:94px;min-height:430px}
+
+.location-label{display:block;max-width:147px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+header .location .chevron{flex-shrink:0}
+#house-picker{position:fixed;inset:34px 0 auto;margin:0 auto;padding:0;border-radius:0;border:0;width:100%;max-width:520px;max-height:calc(100dvh - 34px);overflow:auto;box-shadow:none;background:white;color:#303330}
+#house-picker::backdrop{background:rgba(0,0,0,.60)}
+.house-option{width:100%;height:51px;display:flex;align-items:center;gap:14px;padding:0 15px;font-size:16px;text-align:left}
+.house-check{width:22px;height:22px;color:#ff7927;stroke-width:3.5;visibility:hidden;flex-shrink:0}
+.house-option[aria-pressed=true] .house-check{visibility:visible}
+.manage-houses{border-top:1px solid #e9e9e9;width:100%;height:51px;display:flex;align-items:center;gap:17px;padding:0 18px;font-size:16px;text-align:left}
+.manage-houses>svg{width:22px;height:22px;stroke-width:2.4}
+.manage-chevron{margin-left:auto;margin-right:7px;width:10px;height:10px;border-top:1.5px solid #a5a9a5;border-right:1.5px solid #a5a9a5;transform:rotate(45deg)}
+.native #house-picker{top:0;max-width:none;max-height:100dvh}

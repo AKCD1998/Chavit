@@ -8,7 +8,23 @@ const mockWeather={temperature:30,condition:'แดดจัด',sunset:'05:53 p
 for(const [key,value] of Object.entries(mockWeather))$('#mock-'+key).textContent=value;
 render();
 $('#close-banner').onclick=()=>{adDismissed=true;$('#banner').hidden=true};
-$('#location').onclick=()=>{showDialog('<h2>เลือกบ้าน</h2><button class="choice" id="select-house">001 ตลาด... ✓</button>');$('#select-house').onclick=()=>$('#dialog').close()};
+const houses=[{id:'003',name:'วัดช่องลม'},{id:'004',name:'ตลาดบางน้อย'},{id:'001',name:'ตลาดแม่กลอง'}];
+let selectedHouse='001';
+function renderHouseOptions(){
+ const root=$('#house-options');root.replaceChildren();
+ houses.forEach(house=>{
+  const row=document.createElement('button');row.className='house-option';
+  row.setAttribute('aria-label',house.id+' '+house.name);row.setAttribute('aria-pressed',String(house.id===selectedHouse));
+  row.innerHTML='<svg class="house-check" aria-hidden="true" viewBox="0 0 28 28"><path d="m4 14 6 6L24 6"/></svg><span></span>';
+  row.querySelector('span').textContent=house.id+' '+house.name;
+  row.onclick=()=>{selectedHouse=house.id;$('#location .location-label').textContent=house.id+' '+house.name;$('#location').title=house.id+' '+house.name;$('#house-picker').close()};
+  root.append(row);
+ });
+}
+$('#location').onclick=()=>{renderHouseOptions();$('#house-picker').showModal();$('#location').setAttribute('aria-expanded','true');document.body.classList.add('house-picker-open')};
+$('#house-picker').addEventListener('close',()=>{$('#location').setAttribute('aria-expanded','false');document.body.classList.remove('house-picker-open')});
+$('#house-picker').addEventListener('click',event=>{if(event.target!==$('#house-picker'))return;const rect=event.target.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)event.target.close()});
+$('#manage-houses').onclick=()=>{$('#house-picker').close();showDialog('<h2>จัดการบ้าน</h2>'+houses.map(h=>'<p>'+h.id+' '+h.name+'</p>').join('')+'<small>หน้าจอจำลองการจัดการบ้าน</small>')};
 document.querySelectorAll('[data-room]').forEach(button=>button.onclick=()=>{room=button.dataset.room;document.querySelectorAll('[data-room]').forEach(x=>{x.classList.toggle('active',x===button);x.setAttribute('aria-selected',String(x===button))});render();button.scrollIntoView({block:'nearest',inline:'nearest'});$('#main').scrollTop=0});
 const dialogs={scan:'<h2>สแกน</h2><p>สแกน QR เพื่อเพิ่มอุปกรณ์</p><small>หน้าจอจำลอง ยังไม่ได้เปิดกล้อง</small>',add:'<h2>เพิ่มอุปกรณ์</h2><p>เซ็นเซอร์อุณหภูมิและความชื้น</p><small>ขั้นตอนจับคู่อุปกรณ์จะเพิ่มในรอบถัดไป</small>',rooms:'<h2>จัดการห้อง</h2><p>ทุกอุปกรณ์</p><p>Living Room</p><p>Master Bedroom</p><p>Second Bedroom</p>'};
 document.querySelectorAll('[data-dialog]').forEach(b=>b.onclick=()=>showDialog(dialogs[b.dataset.dialog]));

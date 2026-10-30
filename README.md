@@ -26,3 +26,5 @@ The WebView loads bundled assets from an intercepted HTTPS origin, blocks extern
 Layout, Thai device names, online/offline states and alert indicator follow the supplied screenshots. The banner photo is a temporary replacement (https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8), and the sensor icon is an original vector approximation. These two assets need original source images for a pixel-exact match. The approved generated logo is retained as supplied. Thai typography uses bundled Sarabun under the SIL Open Font License; see `assets/Sarabun-OFL.txt`.
 
 No Google Play deployment or external hosting is configured.
+
+The house-name button opens a top sheet matching the supplied reference, with 003 วัดช่องลม, 004 ตลาดบางน้อย, and 001 ตลาดแม่กลอง. An orange check marks the current house. Selecting a row updates the header and check; the prototype continues to use the same device/weather fixtures. Tapping the dimmed backdrop, Escape or Android Back dismisses the sheet. Manage Houses opens a mock house list.
