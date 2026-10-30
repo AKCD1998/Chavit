@@ -6,7 +6,7 @@ Offline, interactive prototype of the supplied INKBIRD home screen. No backend, 
 
 Run `python3 -m http.server 4173` from this folder, then open http://localhost:4173 at a 393 × 852 mobile viewport. Desktop preview includes simulated Android status/navigation bars. Android uses the real system bars.
 
-The launch screen uses the approved recolored logo. The initial home screen shows the promotional banner, network/location notice, room tabs and five device cards. GO dismisses the introductory panels to show the full device grid. The banner can be dismissed separately. Room tabs filter cards. Cards, house selection, scanner/add controls and bottom navigation open mock UI; device readings and pairing are deliberately unimplemented.
+The launch screen uses the approved recolored logo. The initial home screen shows the promotional banner, network/location notice, room tabs and five device cards. GO dismisses the introductory panels to show the full device grid. The banner can be dismissed separately. All Devices shows the five cards. Living Room, Master Bedroom and Second Bedroom each show the reference empty-room illustration and Thai message, with the location strip. Cards, house selection, scanner/add controls and bottom navigation open mock UI; device readings and pairing are deliberately unimplemented.
 
 ## Android APK
 
