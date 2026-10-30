@@ -28,7 +28,16 @@ const dialogs={add:'<h2>เพิ่มอุปกรณ์</h2><p>เซ็น
 document.querySelectorAll('[data-dialog]').forEach(b=>b.onclick=()=>{if(b.dataset.dialog==='scan')$('#camera-permission').showModal();else showDialog(dialogs[b.dataset.dialog])});
 $('#dialog-close').onclick=()=>$('#dialog').close();$('#dialog').onclick=e=>{if(e.target===$('#dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}};
 const labels={smart:'สมาร์ท',shop:'ร้านค้า',community:'ชุมชน',me:'ฉัน'};
-document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-nav]').forEach(x=>x.classList.toggle('selected',x===b));const home=b.dataset.nav==='home';$('#home-page').hidden=!home;$('#other-page').hidden=home;if(!home)$('#other-page').innerHTML=`<h1>${labels[b.dataset.nav]}</h1><p>หน้าจอนี้อยู่ระหว่างเตรียม mockup</p>`;$('#main').scrollTop=0});
+document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{
+ closeDeviceMenu();
+ document.querySelectorAll('[data-nav]').forEach(x=>{x.classList.toggle('selected',x===b);if(x===b)x.setAttribute('aria-current','page');else x.removeAttribute('aria-current')});
+ const home=b.dataset.nav==='home',me=b.dataset.nav==='me';
+ $('#home-page').hidden=!home;$('#me-page').hidden=!me;$('#other-page').hidden=home||me;
+ document.querySelector('.app-shell').classList.toggle('me-active',me);
+ $('#me-page').classList.remove('profile-collapsed');
+ if(!home&&!me)$('#other-page').innerHTML=`<h1>${labels[b.dataset.nav]}</h1><p>หน้าจอนี้อยู่ระหว่างเตรียม mockup</p>`;
+ $('#main').scrollTop=0;
+});
 setTimeout(()=>$('#splash').classList.add('hidden'),900);
 
 let cameraStream=null,cameraAttempt=0;
@@ -90,4 +99,16 @@ document.querySelectorAll('[data-device-menu]').forEach(button=>button.onclick=(
  if(action==='rooms')showDialog(dialogs.rooms);
  else if(action==='details')showDialog('<h2>ใช้เป็นข้อมูล</h2>'+devices.map(device=>'<p>'+device.name+' · '+device.state+'</p>').join(''));
  else showDialog('<h2>ลำดับอุปกรณ์</h2>'+devices.map((device,index)=>'<p>'+(index+1)+'. '+device.name+'</p>').join(''));
+});
+
+$('#main').addEventListener('scroll',()=>{if(!$('#me-page').hidden)$('#me-page').classList.toggle('profile-collapsed',$('#main').scrollTop>=150)},{passive:true});
+const profileActionLabels={settings:'ตั้งค่า',messages:'ศูนย์ข้อความ',feedback:'ข้อเสนอแนะ',support:'บริการลูกค้า',widget:'วิดเจ็ต',watch:'Apple Watch',alexa:'Alexa Connection Guide',assistant:'Google Assistant',manual:'คู่มือผู้ใช้',about:'เกี่ยวกับ'};
+document.querySelectorAll('[data-profile-action]').forEach(button=>button.onclick=()=>{
+ const action=button.dataset.profileAction;
+ if(action==='name'){
+  showDialog('<h2>ตั้งชื่อของคุณ</h2><label for="profile-name-input">ชื่อ</label><input id="profile-name-input" maxlength="40" autocomplete="nickname"><button id="profile-save">บันทึก</button>');
+  const input=$('#profile-name-input'),current=$('.profile-name').textContent;input.value=current==='แตะเพื่อตั้งชื่อของคุณ'?'':current;
+  $('#profile-save').onclick=()=>{const name=input.value.trim()||'แตะเพื่อตั้งชื่อของคุณ';document.querySelectorAll('.profile-name').forEach(element=>element.textContent=name);$('#dialog').close()};input.focus();
+ }else if(action==='homes'){showDialog('<h2>การจัดการบ้าน</h2>'+houses.map(h=>'<p>'+h.id+' '+h.name+'</p>').join(''))}
+ else showDialog('<h2>'+profileActionLabels[action]+'</h2>'+(action==='about'?'<p>lNKBlRD</p><p>เวอร์ชัน 0.1.0</p>':''));
 });
