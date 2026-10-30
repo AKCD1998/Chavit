@@ -26,9 +26,42 @@ $('#house-picker').addEventListener('close',()=>{$('#location').setAttribute('ar
 $('#house-picker').addEventListener('click',event=>{if(event.target!==$('#house-picker'))return;const rect=event.target.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)event.target.close()});
 $('#manage-houses').onclick=()=>{$('#house-picker').close();showDialog('<h2>จัดการบ้าน</h2>'+houses.map(h=>'<p>'+h.id+' '+h.name+'</p>').join('')+'<small>หน้าจอจำลองการจัดการบ้าน</small>')};
 document.querySelectorAll('[data-room]').forEach(button=>button.onclick=()=>{room=button.dataset.room;document.querySelectorAll('[data-room]').forEach(x=>{x.classList.toggle('active',x===button);x.setAttribute('aria-selected',String(x===button))});render();button.scrollIntoView({block:'nearest',inline:'nearest'});$('#main').scrollTop=0});
-const dialogs={scan:'<h2>สแกน</h2><p>สแกน QR เพื่อเพิ่มอุปกรณ์</p><small>หน้าจอจำลอง ยังไม่ได้เปิดกล้อง</small>',add:'<h2>เพิ่มอุปกรณ์</h2><p>เซ็นเซอร์อุณหภูมิและความชื้น</p><small>ขั้นตอนจับคู่อุปกรณ์จะเพิ่มในรอบถัดไป</small>',rooms:'<h2>จัดการห้อง</h2><p>ทุกอุปกรณ์</p><p>Living Room</p><p>Master Bedroom</p><p>Second Bedroom</p>'};
-document.querySelectorAll('[data-dialog]').forEach(b=>b.onclick=()=>showDialog(dialogs[b.dataset.dialog]));
+const dialogs={add:'<h2>เพิ่มอุปกรณ์</h2><p>เซ็นเซอร์อุณหภูมิและความชื้น</p><small>ขั้นตอนจับคู่อุปกรณ์จะเพิ่มในรอบถัดไป</small>',rooms:'<h2>จัดการห้อง</h2><p>ทุกอุปกรณ์</p><p>Living Room</p><p>Master Bedroom</p><p>Second Bedroom</p>'};
+document.querySelectorAll('[data-dialog]').forEach(b=>b.onclick=()=>{if(b.dataset.dialog==='scan')$('#camera-permission').showModal();else showDialog(dialogs[b.dataset.dialog])});
 $('#dialog-close').onclick=()=>$('#dialog').close();$('#dialog').onclick=e=>{if(e.target===$('#dialog')){const r=e.target.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)e.target.close()}};
 const labels={smart:'สมาร์ท',shop:'ร้านค้า',community:'ชุมชน',me:'ฉัน'};
 document.querySelectorAll('[data-nav]').forEach(b=>b.onclick=()=>{document.querySelectorAll('[data-nav]').forEach(x=>x.classList.toggle('selected',x===b));const home=b.dataset.nav==='home';$('#home-page').hidden=!home;$('#other-page').hidden=home;if(!home)$('#other-page').innerHTML=`<h1>${labels[b.dataset.nav]}</h1><p>หน้าจอนี้อยู่ระหว่างเตรียม mockup</p>`;$('#main').scrollTop=0});
 setTimeout(()=>$('#splash').classList.add('hidden'),900);
+
+let cameraStream=null,cameraAttempt=0;
+function stopCamera(){
+ cameraAttempt++;
+ if(cameraStream){cameraStream.getTracks().forEach(track=>track.stop());cameraStream=null}
+ $('#camera-video').srcObject=null;
+}
+function closeCamera(){if($('#camera-view').open)$('#camera-view').close();stopCamera()}
+$('#camera-cancel').onclick=()=>$('#camera-permission').close();
+$('#camera-back').onclick=closeCamera;
+$('#camera-view').addEventListener('close',stopCamera);
+$('#camera-confirm').onclick=async()=>{
+ $('#camera-permission').close();
+ $('#camera-loading').hidden=false;
+ $('#camera-view').showModal();
+ const attempt=++cameraAttempt;
+ try{
+  if(!navigator.mediaDevices?.getUserMedia)throw new Error('unsupported');
+  const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+  if(attempt!==cameraAttempt||!$('#camera-view').open){stream.getTracks().forEach(track=>track.stop());return}
+  cameraStream=stream;$('#camera-video').srcObject=stream;
+  await $('#camera-video').play();
+  if(attempt===cameraAttempt)$('#camera-loading').hidden=true;
+ }catch(error){
+  if(attempt!==cameraAttempt)return;
+  closeCamera();
+  if(error.name==='NotAllowedError'||error.name==='PermissionDeniedError')toast('ไม่ได้รับอนุญาตให้ใช้กล้อง');
+  else if(error.name==='NotFoundError')toast('ไม่พบกล้องบนอุปกรณ์นี้');
+  else toast('ไม่สามารถเปิดกล้องได้ กรุณาลองอีกครั้ง');
+ }
+};
+document.addEventListener('visibilitychange',()=>{if(document.hidden)closeCamera()});
+window.addEventListener('pagehide',closeCamera);

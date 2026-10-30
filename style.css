@@ -47,3 +47,18 @@ header .location .chevron{flex-shrink:0}
 .manage-houses>svg{width:22px;height:22px;stroke-width:2.4}
 .manage-chevron{margin-left:auto;margin-right:7px;width:10px;height:10px;border-top:1.5px solid #a5a9a5;border-right:1.5px solid #a5a9a5;transform:rotate(45deg)}
 .native #house-picker{top:0;max-width:none;max-height:100dvh}
+
+#camera-permission{position:fixed;inset:auto 10px 57px;margin:0 auto;width:calc(100% - 20px);max-width:500px;max-height:calc(100dvh - 100px);border-radius:28px;padding:25px 25px 15px;background:#fdfdff;box-shadow:0 4px 14px #0002;overflow:auto}
+#camera-permission::backdrop{background:#0003}
+#camera-permission h2{font-size:19px;line-height:28px;margin:0 0 13px;color:#080a08}
+#camera-permission p{font-size:15px;line-height:25px;margin:0 3px 18px;color:#303330}
+.permission-actions{display:flex;align-items:center;height:42px}
+.permission-actions button{width:50%;font-size:19px;font-weight:700;color:#080a08;line-height:22px;padding:0 10px}
+.permission-actions button+button{border-left:1px solid #dedede}
+#camera-view{position:fixed;inset:34px 0 49px;width:100%;height:calc(100dvh - 83px);max-width:520px;max-height:none;padding:0;margin:0 auto;border:0;border-radius:0;background:#000;color:white;overflow:hidden}
+#camera-video{display:block;width:100%;height:100%;object-fit:cover}
+.camera-toolbar{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;height:56px;background:linear-gradient(#0009,transparent);padding:0 12px;gap:16px;font-size:17px}
+.camera-toolbar button{display:flex;align-items:center;justify-content:center;width:40px;height:44px;color:white}
+#camera-loading{position:absolute;top:50%;left:0;right:0;text-align:center;font-size:15px}
+.native #camera-permission{bottom:10px}
+.native #camera-view{inset:0;height:100dvh;max-width:none}
