@@ -64,3 +64,59 @@ header .location .chevron{flex-shrink:0}
 .native #camera-view{inset:0;height:100dvh;max-width:none}
 
 #weather-source{margin-left:auto;margin-right:12px;font:8px Arial,sans-serif;color:#8eaaaF;text-decoration:none;white-space:nowrap}#weather-humidity{font-size:10px;color:#888}.weather-description{white-space:nowrap}#weather-icon[data-condition=cloud],#weather-icon[data-condition=rain],#weather-icon[data-condition=fog],#weather-icon[data-condition=snow],#weather-icon[data-condition=storm],#weather-icon[data-condition=moon]{color:#69aabb}#weather-icon[hidden]{visibility:hidden;display:block}#weather-card[data-status=unavailable] .temperature strong{color:#a3a5a3}
+
+.weather-overview[role=button]{cursor:pointer}.weather-overview:focus-visible{outline:2px solid #0085a7;outline-offset:-3px}
+#weather-details[hidden]{display:none}
+.app-shell.weather-detail-open{background:linear-gradient(#248dbb,#1b7499)}
+.weather-detail-open>header,.weather-detail-open>main,.weather-detail-open>.bottom-nav{display:none}
+.weather-detail-open>.statusbar{background:#248dbb;color:#263e48}
+#weather-details{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none;color:white;outline:none}
+#weather-details::-webkit-scrollbar{display:none}
+.weather-detail-header{height:52px;display:flex;align-items:center;position:relative;justify-content:center;padding:0 40px}
+.weather-detail-header h1{font-size:19px;font-weight:400;margin:0}
+.weather-detail-header button{position:absolute;left:10px;top:4px;width:36px;height:44px;display:flex;align-items:center;justify-content:center;color:white}
+.weather-detail-header svg{width:27px;height:27px;stroke-width:2.7}
+.weather-hero{height:271px;display:flex;flex-direction:column;align-items:center;padding-top:32px}
+#detail-weather-icon{width:58px;height:58px;stroke-width:3.2;color:white;flex-shrink:0}
+.detail-current-temperature{display:flex;align-items:flex-start;gap:7px;margin-top:25px;font-family:Arial,sans-serif}
+.detail-current-temperature strong{font-size:57px;line-height:1.15}
+.detail-current-temperature>span{font-size:27px;line-height:1.4}
+.weather-hero p{margin:18px 0 0;font-size:18px}
+.weather-detail-content{padding:0 10px 22px}
+.weather-panel{background:rgba(246,253,255,.83);border-radius:11px;color:#35474e;overflow:hidden}
+.weather-panel h2{font-size:13px;line-height:20px;font-weight:400;color:#798b91;margin:0;display:flex;align-items:flex-start;gap:8px}
+.metric-symbol{width:17px;height:19px;flex-shrink:0;display:inline-flex;align-items:center;justify-content:center;color:#69b9d4;font-size:21px;line-height:19px;stroke-width:1.7}
+.calendar-symbol{color:#d7d66f}.uv-symbol{color:#bca4d6}.direction-symbol{color:#d6bc96}
+.forecast-card{padding:15px 17px 0}
+.forecast-card>h2{padding-bottom:12px}
+.forecast-row{display:grid;grid-template-columns:1.3fr .8fr .8fr .75fr .9fr;gap:4px;align-items:center;height:61px;border-top:1px solid #c6dfe8;font-size:19px}
+.forecast-row .forecast-day{font-size:17px;font-weight:700}
+.forecast-row svg{width:29px;height:32px;stroke-width:2.1;color:#f6b44e}
+.forecast-row svg[data-condition=storm],.forecast-row svg[data-condition=rain],.forecast-row svg[data-condition=cloud],.forecast-row svg[data-condition=fog],.forecast-row svg[data-condition=snow]{color:#56afd0}
+.forecast-row .forecast-temp{font-weight:700;white-space:nowrap}
+.forecast-temp sup{font-size:10px;font-weight:400;vertical-align:super}
+.forecast-row .forecast-high{text-align:right}
+.forecast-range{height:5px;border-radius:5px;background:linear-gradient(90deg,#ffe578,#ffa34d);width:33px;max-width:100%;justify-self:center}
+.weather-metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.weather-metric-grid>.weather-panel{padding:10px 18px 14px;min-height:141px}
+.metric-value{display:block;font:700 30px/1.2 Arial,sans-serif;margin-top:15px;white-space:nowrap}
+.uv-panel small{display:block;font-size:10px;color:#879a9f;margin-top:7px}
+.solar-panel>strong{display:block;font:700 28px/1.15 Arial,sans-serif;margin-top:9px;white-space:nowrap}
+.solar-panel p{font-size:13px;line-height:19px;color:#839298;margin:8px 0 0;white-space:nowrap}
+.wind-panel{grid-column:1/-1;min-height:169px!important}
+.wind-title{display:flex;align-items:center;justify-content:space-between}
+#wind-unit{font-size:11px;color:#7d8d93;padding:0;display:flex;align-items:center;gap:5px}
+#wind-unit span{font-size:15px;line-height:7px;letter-spacing:-5px;margin-right:5px}
+.wind-panel .metric-value{font-size:32px;margin-top:12px}
+.wind-panel .direction-label{margin-top:15px}
+#detail-wind-direction{font:19px Arial,sans-serif;margin:11px 4px 0}
+.feels-panel h2{white-space:nowrap;font-size:12px}
+.feels-reading{display:flex;align-items:baseline;gap:4px;margin-top:13px;font-family:Arial,sans-serif}
+.feels-reading>span{font-size:15px;font-weight:700;color:#87969b;margin-right:1px}
+.feels-reading>strong{font-size:29px;line-height:1.1}
+.feels-reading>sup{font-size:15px;align-self:flex-start;margin-top:2px}
+.humidity-panel .metric-value{margin-top:20px}
+.weather-detail-footer{font-size:10px;padding:15px 4px 0;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;color:#d8edf4}
+.weather-detail-footer a{color:inherit}.weather-detail-footer button{color:white;border:1px solid #c8e1eb;border-radius:6px;padding:4px 10px}
+.forecast-loading{font-size:13px;color:#7d9299;padding-bottom:15px}
+@media(max-width:370px){.solar-panel>strong{font-size:24px}.weather-metric-grid>.weather-panel{padding-left:14px;padding-right:14px}.forecast-row .forecast-day{font-size:15px}.forecast-row{font-size:18px}.feels-panel h2{font-size:11px}}

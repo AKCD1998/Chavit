@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
             @Override public boolean shouldOverrideUrlLoading(WebView view, android.webkit.WebResourceRequest request) { return true; }
         });
         web.setWebChromeClient(new android.webkit.WebChromeClient() {
+            @Override public void onReceivedTitle(WebView view, String title) { getWindow().setStatusBarColor(title != null && title.startsWith("สภาพอากาศ") ? 0xff248dbb : 0xfff4f4f4); }
             @Override public void onPermissionRequest(android.webkit.PermissionRequest request) {
                 if (!("https".equals(request.getOrigin().getScheme()) && "app.local".equals(request.getOrigin().getHost()) && (request.getOrigin().getPort() == -1 || request.getOrigin().getPort() == 443)) || !java.util.Arrays.asList(request.getResources()).contains(android.webkit.PermissionRequest.RESOURCE_VIDEO_CAPTURE)) { request.deny(); return; }
                 if (checkSelfPermission(android.Manifest.permission.CAMERA) == android.content.pm.PackageManager.PERMISSION_GRANTED) {
@@ -54,5 +55,5 @@ public class MainActivity extends Activity {
     @Override protected void onPause() { if (pendingCamera == null) web.evaluateJavascript("if (typeof closeCamera === 'function') closeCamera()", null); super.onPause(); }
     @Override protected void onStop() { web.evaluateJavascript("if (typeof closeCamera === 'function') closeCamera()", null); super.onStop(); }
     @Override protected void onDestroy() { if (pendingCamera != null) { pendingCamera.deny(); pendingCamera = null; } web.destroy(); super.onDestroy(); }
-    @Override public void onBackPressed() { web.evaluateJavascript("(() => { const d = document.querySelector('dialog[open]'); if (d) { d.close(); return true; } return false; })()", result -> { if (!"true".equals(result)) MainActivity.super.onBackPressed(); }); }
+    @Override public void onBackPressed() { web.evaluateJavascript("(() => { const d = document.querySelector('dialog[open]'); if (d) { d.close(); return true; } if (typeof closeWeatherDetails === 'function' && closeWeatherDetails()) return true; return false; })()", result -> { if (!"true".equals(result)) MainActivity.super.onBackPressed(); }); }
 }
