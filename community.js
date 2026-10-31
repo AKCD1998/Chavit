@@ -42,10 +42,10 @@
  }
  const emptyMessages={posts:'คุณยังไม่ได้แชร์โพสต์ใด ๆ',comments:'คุณยังไม่ได้แสดงความคิดเห็นในโพสต์ใด ๆ',likes:'คุณยังไม่ได้ถูกใจโพสต์ใด ๆ',saved:'คุณยังไม่ได้บันทึกโพสต์ใด ๆ'};
  function paintProfile(){
-  const query=byId('community-profile-search').value.trim().toLocaleLowerCase();const list=posts.filter(post=>(profileTab==='likes'?liked.has(post.id):profileTab==='saved'?saved.has(post.id):false)&&(!query||[post.title,post.body,post.author].join(' ').toLocaleLowerCase().includes(query)));
+  const list=posts.filter(post=>profileTab==='likes'?liked.has(post.id):profileTab==='saved'?saved.has(post.id):false);
   const results=byId('community-profile-results');results.replaceChildren();results.dataset.empty=String(!list.length);
   if(list.length)results.append(...list.map(makePost));
-  else{const image=document.createElement('img');image.src='assets/community-empty.svg';image.alt='';image.className='community-empty-image';const text=document.createElement('p');text.className='community-empty-message';text.textContent=query?'ไม่พบโพสต์ที่ค้นหา':emptyMessages[profileTab];results.append(image,text)}
+  else{const image=document.createElement('img');image.src='assets/community-empty.svg';image.alt='';image.className='community-empty-image';const text=document.createElement('p');text.className='community-empty-message';text.textContent=emptyMessages[profileTab];results.append(image,text)}
  }
  function selectProfileTab(tab){
   profileTab=tab.dataset.communityProfileTab;
@@ -65,9 +65,30 @@
  function bindTabs(selector,activate){const buttons=[...document.querySelectorAll(selector)];buttons.forEach(tab=>{tab.onclick=()=>activate(tab);tab.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const index=buttons.indexOf(tab),next=event.key==='Home'?buttons[0]:event.key==='End'?buttons.at(-1):buttons[(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length];activate(next);next.focus({preventScroll:true})})})}
  document.querySelectorAll('[data-community-category]').forEach(tab=>{tab.id='community-category-'+tab.dataset.communityCategory;tab.setAttribute('aria-controls','community-posts')});byId('community-posts').setAttribute('role','tabpanel');byId('community-posts').setAttribute('aria-labelledby','community-category-all');
  bindTabs('[data-community-view]',selectMode);bindTabs('[data-community-profile-tab]',selectProfileTab);bindTabs('[data-community-category]',selectCategory);
- byId('community-feed-search').addEventListener('input',paintFeed);byId('community-sort').onchange=paintFeed;byId('community-profile-search').addEventListener('input',paintProfile);
+ byId('community-feed-search').addEventListener('input',paintFeed);byId('community-sort').onchange=paintFeed;
  document.querySelector('.community-category-menu').onclick=()=>{showDialog('<h2>หมวดชุมชน</h2><div id="community-category-choices"></div>');document.querySelectorAll('[data-community-category]').forEach(tab=>{const choice=button(tab.textContent.trim(),'choice');choice.onclick=()=>{byId('dialog').close();selectCategory(tab)};byId('community-category-choices').append(choice)})};
- byId('community-profile-search-toggle').onclick=()=>{const row=document.querySelector('.community-profile-search');row.hidden=!row.hidden;byId('community-profile-search-toggle').setAttribute('aria-expanded',String(!row.hidden));if(!row.hidden)byId('community-profile-search').focus();else{byId('community-profile-search').value='';paintProfile()}};
+ const searchPage=byId('community-search-page'),searchInput=byId('community-profile-search');
+ let searchPreviousTitle='lNKBlRD';
+ function openProfileSearch(pushHistory=true){
+  if(searchPage.open){searchInput.focus({preventScroll:true});return}
+  if(byId('community-page').hidden)document.querySelector('[data-nav=community]').click();
+  if(byId('community-profile-panel').hidden)selectMode(byId('community-profile-tab'));
+  if(pushHistory&&location.hash!=='#community-search')history.pushState({communitySearch:true},'',location.pathname+location.search+'#community-search');
+  searchPreviousTitle=document.title;document.title='ค้นหา — lNKBlRD';
+  searchInput.value='';searchPage.showModal();document.body.classList.add('community-search-open');byId('community-profile-search-toggle').setAttribute('aria-expanded','true');
+  searchInput.focus({preventScroll:true});
+ }
+ function closeProfileSearch(){if(searchPage.open)searchPage.close()}
+ byId('community-profile-search-toggle').onclick=()=>openProfileSearch();
+ byId('community-search-cancel').onclick=closeProfileSearch;
+ byId('community-search-form').onsubmit=event=>{event.preventDefault();searchInput.blur()};
+ searchPage.addEventListener('close',()=>{
+  searchInput.blur();searchInput.value='';document.body.classList.remove('community-search-open');byId('community-profile-search-toggle').setAttribute('aria-expanded','false');document.title=searchPreviousTitle;
+  if(location.hash==='#community-search')history.back();
+  byId('community-profile-search-toggle').focus({preventScroll:true});
+ });
+ window.addEventListener('popstate',()=>{if(location.hash==='#community-search')openProfileSearch(false);else closeProfileSearch()});
+ if(location.hash==='#community-search')openProfileSearch(false);
  byId('community-edit-profile').onclick=()=>{
   showDialog('<form class="community-form" id="community-edit-form"><h2>แก้ไขโปรไฟล์</h2><label for="community-name-input">ชื่อ</label><input id="community-name-input" maxlength="40" autocomplete="nickname"><label for="community-bio-input">แนะนำตัวคุณเอง</label><textarea id="community-bio-input" maxlength="240"></textarea><button type="submit" class="community-form-save">บันทึก</button></form>');
   byId('community-name-input').value=profileName;byId('community-bio-input').value=profileBio==='แนะนำตัวคุณเอง'?'':profileBio;

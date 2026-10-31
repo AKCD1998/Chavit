@@ -30,7 +30,7 @@ public class MainActivity extends Activity {
         });
         web.setWebChromeClient(new android.webkit.WebChromeClient() {
             @Override public void onReceivedTitle(WebView view, String title) {
-                int target = title != null && title.startsWith("สภาพอากาศ") ? 0xff248dbb : 0xfff4f4f4;
+                int target = title != null && title.startsWith("สภาพอากาศ") ? 0xff248dbb : title != null && title.startsWith("ค้นหา") ? 0xffffffff : 0xfff4f4f4;
                 if (statusBarAnimation != null) statusBarAnimation.cancel();
                 int current = getWindow().getStatusBarColor();
                 if (current == target) return;
