@@ -89,11 +89,33 @@
  });
  window.addEventListener('popstate',()=>{if(location.hash==='#community-search')openProfileSearch(false);else closeProfileSearch()});
  if(location.hash==='#community-search')openProfileSearch(false);
- byId('community-edit-profile').onclick=()=>{
-  showDialog('<form class="community-form" id="community-edit-form"><h2>แก้ไขโปรไฟล์</h2><label for="community-name-input">ชื่อ</label><input id="community-name-input" maxlength="40" autocomplete="nickname"><label for="community-bio-input">แนะนำตัวคุณเอง</label><textarea id="community-bio-input" maxlength="240"></textarea><button type="submit" class="community-form-save">บันทึก</button></form>');
-  byId('community-name-input').value=profileName;byId('community-bio-input').value=profileBio==='แนะนำตัวคุณเอง'?'':profileBio;
-  byId('community-edit-form').onsubmit=event=>{event.preventDefault();profileName=byId('community-name-input').value.trim()||'InkbirdUser_6043c19eff74';profileBio=byId('community-bio-input').value.trim()||'แนะนำตัวคุณเอง';byId('community-profile-name').textContent=profileName;byId('community-profile-bio').textContent=profileBio;byId('dialog').close()};
- };
+ const personalPage=byId('personal-info-page');let personalPreviousTitle='lNKBlRD';
+ function syncPersonalInfo(){const name=document.querySelector('.profile-name').textContent;byId('personal-info-name').textContent=name;byId('personal-info-bio').textContent=profileBio}
+ function openPersonalInfo(pushHistory=true){
+  if(personalPage.open)return;
+  if(byId('community-page').hidden)document.querySelector('[data-nav=community]').click();
+  if(byId('community-profile-panel').hidden)selectMode(byId('community-profile-tab'));
+  if(pushHistory&&location.hash!=='#personal-info')history.pushState({personalInfo:true},'',location.pathname+location.search+'#personal-info');
+  syncPersonalInfo();personalPreviousTitle=document.title;document.title='ข้อมูลส่วนบุคคล — lNKBlRD';personalPage.showModal();personalPage.querySelector('.personal-info-scroll').scrollTop=0;document.body.classList.add('personal-info-open');byId('community-edit-profile').setAttribute('aria-expanded','true');byId('personal-info-back').focus({preventScroll:true});
+ }
+ function closePersonalInfo(){if(personalPage.open){if(byId('dialog').open)byId('dialog').close();personalPage.close()}}
+ byId('community-edit-profile').onclick=()=>openPersonalInfo();
+ byId('personal-info-back').onclick=closePersonalInfo;
+ personalPage.addEventListener('close',()=>{document.body.classList.remove('personal-info-open');document.title=personalPreviousTitle;byId('community-edit-profile').setAttribute('aria-expanded','false');if(location.hash==='#personal-info')history.back();byId('community-edit-profile').focus({preventScroll:true})});
+ window.addEventListener('popstate',()=>{if(location.hash==='#personal-info')openPersonalInfo(false);else closePersonalInfo()});
+ if(location.hash==='#personal-info')openPersonalInfo(false);
+ document.querySelectorAll('[data-personal-field]').forEach(control=>control.onclick=()=>{
+  const field=control.dataset.personalField;
+  if(field==='name'||field==='bio'){
+   const name=field==='name';showDialog('<form class="community-form" id="personal-field-form"><h2></h2><label for="personal-field-input"></label>'+(name?'<input id="personal-field-input" maxlength="40" autocomplete="nickname">':'<textarea id="personal-field-input" maxlength="240"></textarea>')+'<button type="submit" class="community-form-save">บันทึก</button></form>');
+   const form=byId('personal-field-form'),input=byId('personal-field-input');form.querySelector('h2').textContent=name?'ชื่อ':'แนะนำตัวสั้นๆ';form.querySelector('label').textContent=name?'ชื่อ':'แนะนำตัวคุณเอง';
+   input.value=name?(byId('personal-info-name').textContent==='แตะเพื่อตั้งชื่อของคุณ'?'':byId('personal-info-name').textContent):(profileBio==='แนะนำตัวคุณเอง'?'':profileBio);
+   form.onsubmit=event=>{event.preventDefault();const value=input.value.trim();if(name){profileName=value||'InkbirdUser_6043c19eff74';byId('community-profile-name').textContent=profileName;document.querySelectorAll('.profile-name').forEach(element=>element.textContent=value||'แตะเพื่อตั้งชื่อของคุณ')}else{profileBio=value||'แนะนำตัวคุณเอง';byId('community-profile-bio').textContent=profileBio}syncPersonalInfo();byId('dialog').close()};input.focus();
+  }else if(field==='avatar')showDialog('<h2>รูปประจำตัว</h2><img class="personal-field-preview" src="assets/avatar.svg" alt="รูปประจำตัว">');
+  else if(field==='background')showDialog('<h2>รูปพื้นหลัง</h2><span class="personal-background-preview" aria-label="รูปพื้นหลังสีครีม"></span>');
+  else if(field==='timezone')showDialog('<h2>เขตเวลา</h2><p>Asia/Bangkok ✓</p>');
+  else showDialog('<h2>เชื่อมโยงอีเมล</h2><p>เชื่อมต่อที่อยู่อีเมลกับบัญชีของคุณ</p>');
+ });
  document.querySelectorAll('[data-community-compose]').forEach(control=>control.onclick=()=>{
   showDialog('<form class="community-form" id="community-draft-form"><h2>สร้างโพสต์</h2><label for="community-draft-title">หัวข้อ</label><input id="community-draft-title" maxlength="120"><label for="community-draft-body">เนื้อหา</label><textarea id="community-draft-body" maxlength="2000"></textarea><button type="submit" class="community-form-save">บันทึกแบบร่าง</button></form>');
   byId('community-draft-title').value=draft.title;byId('community-draft-body').value=draft.body;byId('community-draft-form').onsubmit=event=>{event.preventDefault();draft={title:byId('community-draft-title').value,body:byId('community-draft-body').value};byId('dialog').close();toast('บันทึกแบบร่างแล้ว')};

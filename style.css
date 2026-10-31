@@ -307,3 +307,35 @@ header .location .chevron{flex-shrink:0}
 .community-search-open .statusbar{background:white}
 .native #community-search-page{inset:0;max-width:none;height:100dvh}
 @media(max-width:370px){.community-search-page-header{gap:16px}}
+
+#personal-info-page{position:fixed;inset:34px 0 49px;margin:0 auto;padding:0;width:100%;max-width:520px;height:calc(100dvh - 83px);max-height:none;border:0;border-radius:0;background:#f4f4f4;color:#303631;box-shadow:none;overflow:hidden}
+#personal-info-page::backdrop{background:transparent}
+.personal-info-scroll{height:100%;overflow-y:auto;scrollbar-width:none;padding-bottom:30px}
+.personal-info-back-row{height:68px;padding:34px 16px 0}
+#personal-info-back{display:flex;align-items:center;justify-content:center;padding:0;width:26px;height:26px;color:#444d48}
+#personal-info-back svg{width:24px;height:24px;stroke-width:1.8}
+#personal-info-title{font-size:24px;line-height:32px;margin:16px 16px 10px;font-weight:700}
+.personal-info-groups{padding:0 16px}
+.personal-info-group{background:#fff;border-radius:11px;margin-bottom:16px;overflow:hidden}
+.personal-info-row{display:flex;align-items:center;gap:14px;position:relative;width:100%;min-height:54px;padding:12px 16px;text-align:left;font-size:16px;line-height:22px}
+.personal-info-row>strong{flex-shrink:0;font-weight:700}
+.personal-info-row>span:not(.personal-background-thumbnail){color:#a1a6a2;font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-left:auto;min-width:0}
+.personal-info-chevron{width:7px;height:7px;border-top:1.2px solid #a1a5a2;border-right:1.2px solid #a1a5a2;transform:rotate(45deg);flex-shrink:0;margin-left:auto}
+.personal-info-row>span+.personal-info-chevron,.personal-avatar-row .personal-info-chevron{margin-left:0}
+.personal-info-row+.personal-info-row:before{content:"";position:absolute;left:16px;right:16px;top:0;border-top:1px solid #e6e6e6}
+.personal-avatar-row{height:110px}
+.personal-avatar-row img{width:70px;height:70px;border-radius:50%;margin-left:auto}
+.personal-account-row{min-height:56px}
+.personal-account-row>span{font-family:Arial,sans-serif}
+.personal-email-row{min-height:52px}
+.personal-email-note{font-size:12px!important;line-height:20px!important;padding:0 16px 9px;margin:0!important;color:#a2a6a3}
+.personal-timezone-row{min-height:56px}
+.personal-background-row{height:102px}
+.personal-background-thumbnail{display:block;width:70px;height:70px;flex-shrink:0;margin-left:auto;border-radius:10px;background:linear-gradient(35deg,transparent 4%,#c0b39444 21%,transparent 34%,#f7f0df55 43%,transparent 57%),linear-gradient(135deg,#f6f1e5,#e4d8bf 35%,#cbbd9f 70%,#e7d9bc);border:1px solid #e1e4dc}
+.personal-info-open .statusbar{background:#f4f4f4}
+.native #personal-info-page{inset:0;max-width:none;height:100dvh}
+.personal-field-preview{display:block;width:110px;height:110px;object-fit:contain;margin:18px auto}
+.personal-background-preview{display:block;width:100%;height:160px;border-radius:10px;background:linear-gradient(35deg,transparent,#c0b39444,transparent),linear-gradient(135deg,#f6f1e5,#d9ccb2,#cbbd9f)}
+@media(max-width:370px){.personal-info-row{font-size:15px;gap:10px;padding-left:15px;padding-right:15px}.personal-info-row>span:not(.personal-background-thumbnail){font-size:12px}}
+
+.personal-avatar-row,.personal-background-row{gap:9px}
