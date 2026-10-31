@@ -339,3 +339,34 @@ header .location .chevron{flex-shrink:0}
 @media(max-width:370px){.personal-info-row{font-size:15px;gap:10px;padding-left:15px;padding-right:15px}.personal-info-row>span:not(.personal-background-thumbnail){font-size:12px}}
 
 .personal-avatar-row,.personal-background-row{gap:9px}
+
+#community-compose-page{position:fixed;inset:34px 0 49px;margin:0 auto;padding:0;width:100%;max-width:520px;height:calc(100dvh - 83px);max-height:none;border:0;border-radius:0;background:white;color:#353d38;box-shadow:none;overflow:hidden}
+#community-compose-page::backdrop{background:transparent}
+#community-compose-form{height:100%;display:flex;flex-direction:column}
+.community-compose-scroll{flex:1;min-height:0;overflow-y:auto;scrollbar-width:none}
+.composer-back-row{height:68px;padding:34px 16px 0}
+#community-compose-back{width:26px;height:26px;display:flex;padding:0;align-items:center;justify-content:center;color:#3f4743}
+#community-compose-back svg{width:24px;height:24px;stroke-width:1.8}
+.composer-fields{padding:0 16px}
+.composer-image-add{display:flex;position:relative;align-items:center;justify-content:center;width:116px;height:116px;border-radius:10px;background:#f5f5f5;border:1px solid #e8e8e8;margin:18px 0;overflow:hidden;cursor:pointer;color:#a4a9a5}
+.composer-image-add input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.composer-image-add svg{width:24px;height:24px;stroke-width:1.5}
+#community-post-image-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+#community-post-image-preview[hidden]{display:none}
+.composer-title-wrap{height:48px;position:relative;border-bottom:1px solid #e4e4e4}
+#community-title-placeholder{position:absolute;left:2px;top:12px;color:#a3a8a4;font-size:16px;font-weight:700;pointer-events:none}
+.composer-fields em{font-style:normal;color:#e04c44;margin-left:4px}
+#community-draft-title{width:100%;height:47px;font:16px Sarabun,sans-serif;border:0;background:none;outline:0;padding:0 2px;color:#353d38}
+#community-draft-body{display:block;width:100%;height:104px;resize:none;font:15px/22px Sarabun,sans-serif;border:0;border-bottom:1px solid #e4e4e4;border-radius:0;outline:0;padding:20px 2px 0;background:white;color:#353d38}
+#community-draft-body::placeholder{color:#a4a9a5}
+#community-post-category{display:flex;align-items:center;gap:12px;text-align:left;width:100%;height:62px;padding:0;font-size:16px}
+#community-post-category strong{font-weight:700;flex-shrink:0}
+#community-post-category-value{font-size:13px;color:#a1a7a2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-left:auto}
+#community-post-category i{width:8px;height:8px;border-top:1px solid #c9cdca;border-right:1px solid #c9cdca;transform:rotate(45deg);flex-shrink:0;margin-left:auto;margin-right:7px}
+#community-post-category-value:not(:empty)+i{margin-left:0}
+.composer-submit-row{padding:16px 0;flex-shrink:0;background:white;display:flex;justify-content:center}
+#community-post-submit{width:200px;height:48px;background:#0088b2;border-radius:28px;color:#d2e8f0;font-size:18px;font-weight:700;padding:0}
+.community-composer-open .statusbar{background:white}
+.native #community-compose-page{inset:0;max-width:none;height:100dvh}
+.community-post-attached-image{display:block;width:100%;max-height:320px;object-fit:contain;margin:12px 0;border-radius:8px}
+.community-post-detail-image{width:100%;max-height:260px;object-fit:contain;margin:10px 0}

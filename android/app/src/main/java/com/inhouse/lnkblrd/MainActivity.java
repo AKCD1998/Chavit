@@ -5,6 +5,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 public class MainActivity extends Activity {
     private WebView web;
+    private android.webkit.ValueCallback<android.net.Uri[]> imageChooserCallback;
     private android.animation.ValueAnimator statusBarAnimation;
     private android.webkit.PermissionRequest pendingCamera;
     @Override public void onCreate(Bundle state) {
@@ -13,7 +14,7 @@ public class MainActivity extends Activity {
         web.setBackgroundColor(0xfff4f4f4);
         web.getSettings().setJavaScriptEnabled(true);
         web.getSettings().setAllowFileAccess(false);
-        web.getSettings().setAllowContentAccess(false);
+        web.getSettings().setAllowContentAccess(true);
         web.setWebViewClient(new WebViewClient() {
             @Override public android.webkit.WebResourceResponse shouldInterceptRequest(WebView view, android.webkit.WebResourceRequest request) {
                 android.net.Uri uri = request.getUrl();
@@ -29,8 +30,17 @@ public class MainActivity extends Activity {
             @Override public boolean shouldOverrideUrlLoading(WebView view, android.webkit.WebResourceRequest request) { return true; }
         });
         web.setWebChromeClient(new android.webkit.WebChromeClient() {
+            @Override public boolean onShowFileChooser(WebView view, android.webkit.ValueCallback<android.net.Uri[]> callback, FileChooserParams params) {
+                if (imageChooserCallback != null) imageChooserCallback.onReceiveValue(null);
+                imageChooserCallback = callback;
+                android.content.Intent intent = new android.content.Intent(android.content.Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");intent.addCategory(android.content.Intent.CATEGORY_OPENABLE);
+                try { startActivityForResult(android.content.Intent.createChooser(intent, "เลือกรูปภาพ"), 200); }
+                catch (android.content.ActivityNotFoundException exception) { imageChooserCallback.onReceiveValue(null);imageChooserCallback = null; }
+                return true;
+            }
             @Override public void onReceivedTitle(WebView view, String title) {
-                int target = title != null && title.startsWith("สภาพอากาศ") ? 0xff248dbb : title != null && title.startsWith("ค้นหา") ? 0xffffffff : 0xfff4f4f4;
+                int target = title != null && title.startsWith("สภาพอากาศ") ? 0xff248dbb : title != null && (title.startsWith("ค้นหา") || title.startsWith("สร้างโพสต์")) ? 0xffffffff : 0xfff4f4f4;
                 if (statusBarAnimation != null) statusBarAnimation.cancel();
                 int current = getWindow().getStatusBarColor();
                 if (current == target) return;
@@ -55,6 +65,10 @@ public class MainActivity extends Activity {
         setContentView(web);
         web.loadUrl("https://app.local/index.html?native=1");
     }
+    @Override protected void onActivityResult(int code, int result, android.content.Intent data) {
+        super.onActivityResult(code, result, data);
+        if (code == 200 && imageChooserCallback != null) { imageChooserCallback.onReceiveValue(android.webkit.WebChromeClient.FileChooserParams.parseResult(result, data));imageChooserCallback = null; }
+    }
     @Override public void onRequestPermissionsResult(int code, String[] permissions, int[] results) {
         super.onRequestPermissionsResult(code, permissions, results);
         if (code == 100 && pendingCamera != null) {
@@ -65,6 +79,6 @@ public class MainActivity extends Activity {
     }
     @Override protected void onPause() { if (pendingCamera == null) web.evaluateJavascript("if (typeof closeCamera === 'function') closeCamera()", null); super.onPause(); }
     @Override protected void onStop() { web.evaluateJavascript("if (typeof closeCamera === 'function') closeCamera()", null); super.onStop(); }
-    @Override protected void onDestroy() { if (statusBarAnimation != null) statusBarAnimation.cancel(); if (pendingCamera != null) { pendingCamera.deny(); pendingCamera = null; } web.destroy(); super.onDestroy(); }
+    @Override protected void onDestroy() { if (imageChooserCallback != null) { imageChooserCallback.onReceiveValue(null);imageChooserCallback = null; } if (statusBarAnimation != null) statusBarAnimation.cancel(); if (pendingCamera != null) { pendingCamera.deny(); pendingCamera = null; } web.destroy(); super.onDestroy(); }
     @Override public void onBackPressed() { web.evaluateJavascript("(() => { const d = document.querySelector('dialog[open]'); if (d) { d.close(); return true; } if (typeof closeWeatherDetails === 'function' && closeWeatherDetails()) return true; return false; })()", result -> { if (!"true".equals(result)) MainActivity.super.onBackPressed(); }); }
 }

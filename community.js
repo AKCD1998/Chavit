@@ -6,13 +6,14 @@
   {id:'thermometer',author:'InkbirdUser_1221e432338d',official:false,date:'3 ชั่วโมงที่แล้ว',title:'termometro int 11l-b',intro:'',body:'ho comprato questo da due giorni e non sono ancora riuscito ad effettuare una misurazione, la base indica tre linee e non misura niente. Inoltre, la sonda si collega ma non mostra la temperatura.',thaiIntro:'',thaiBody:'ซื้อมาได้สองวันแล้ว แต่ยังวัดค่าไม่ได้ ฐานแสดงขีดสามขีดและไม่แสดงค่าที่วัด นอกจากนี้ โพรบเชื่อมต่อแล้วแต่ยังไม่แสดงอุณหภูมิ',likes:0,comments:0,categories:['all','thermo']}
  ];
  const liked=new Set(),saved=new Set();let mode='feed',category='all',profileTab='posts';
- let profileName='InkbirdUser_6043c19eff74',profileBio='แนะนำตัวคุณเอง',draft={title:'',body:''};
+ let profileName='InkbirdUser_6043c19eff74',profileBio='แนะนำตัวคุณเอง',draft={title:'',body:'',category:'',imageUrl:''};
  function icon(name){const svg=document.createElementNS('http://www.w3.org/2000/svg','svg'),use=document.createElementNS('http://www.w3.org/2000/svg','use');svg.setAttribute('aria-hidden','true');use.setAttribute('href','#'+name);svg.append(use);return svg}
  function button(text,className){const element=document.createElement('button');element.className=className;element.textContent=text;return element}
  function updateLikeButtons(post){document.querySelectorAll('.community-post[data-post-id="'+post.id+'"] .community-like').forEach(control=>{control.setAttribute('aria-pressed',String(liked.has(post.id)));control.querySelector('span').textContent=post.likes+(liked.has(post.id)?1:0)||''})}
  function openPost(post){
   showDialog('<div class="community-post-detail"><h2></h2><p></p><button class="community-save-post"></button></div>');
   const detail=document.querySelector('.community-post-detail');detail.querySelector('h2').textContent=post.title;detail.querySelector('p').textContent=[post.intro,post.body].filter(Boolean).join('\n\n');
+  if(post.imageUrl){const image=document.createElement('img');image.src=post.imageUrl;image.alt='รูปประกอบโพสต์';image.className='community-post-detail-image';detail.querySelector('h2').after(image)}
   const save=detail.querySelector('button');save.textContent=saved.has(post.id)?'บันทึกแล้ว':'บันทึก';save.setAttribute('aria-pressed',String(saved.has(post.id)));
   save.onclick=()=>{if(saved.has(post.id))saved.delete(post.id);else saved.add(post.id);save.textContent=saved.has(post.id)?'บันทึกแล้ว':'บันทึก';save.setAttribute('aria-pressed',String(saved.has(post.id)));paintProfile()};
  }
@@ -32,17 +33,17 @@
   like.onclick=()=>{if(liked.has(post.id))liked.delete(post.id);else liked.add(post.id);updateLikeButtons(post);paintProfile()};
   const comment=button('','community-post-action');comment.setAttribute('aria-label','ความคิดเห็น '+post.title);const comments=document.createElement('span');comments.textContent=post.comments||'';comment.append(icon('message'),comments);comment.onclick=()=>{showDialog('<h2>ความคิดเห็น</h2><p id="community-comment-title"></p>');byId('community-comment-title').textContent=post.title};
   title.tabIndex=0;title.setAttribute('role','button');title.setAttribute('aria-label','เปิดโพสต์ '+post.title);title.onclick=()=>openPost(post);title.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openPost(post)}};
-  footer.append(translate,like,comment);article.append(author,title,intro,body,more,footer);return article;
+  footer.append(translate,like,comment);article.append(author,title,intro,body);if(post.imageUrl){const image=document.createElement('img');image.src=post.imageUrl;image.alt='รูปประกอบโพสต์';image.className='community-post-attached-image';article.append(image)}article.append(more,footer);return article;
  }
  function paintFeed(){
   const query=byId('community-feed-search').value.trim().toLocaleLowerCase();let list=posts.filter(post=>post.categories.includes(category)&&(!query||[post.author,post.title,post.body].join(' ').toLocaleLowerCase().includes(query)));
-  if(byId('community-sort').value==='latest')list=[...list].reverse();
+  if(byId('community-sort').value==='latest')list=[...list].sort((a,b)=>(b.createdAt||posts.indexOf(b))-(a.createdAt||posts.indexOf(a)));
   const container=byId('community-posts');container.replaceChildren(...list.map(makePost));
   if(!list.length){const empty=document.createElement('p');empty.className='community-no-results';empty.textContent='ไม่พบโพสต์ที่ค้นหา';container.append(empty)}
  }
  const emptyMessages={posts:'คุณยังไม่ได้แชร์โพสต์ใด ๆ',comments:'คุณยังไม่ได้แสดงความคิดเห็นในโพสต์ใด ๆ',likes:'คุณยังไม่ได้ถูกใจโพสต์ใด ๆ',saved:'คุณยังไม่ได้บันทึกโพสต์ใด ๆ'};
  function paintProfile(){
-  const list=posts.filter(post=>profileTab==='likes'?liked.has(post.id):profileTab==='saved'?saved.has(post.id):false);
+  const list=posts.filter(post=>profileTab==='posts'?post.owned===true:profileTab==='likes'?liked.has(post.id):profileTab==='saved'?saved.has(post.id):false);
   const results=byId('community-profile-results');results.replaceChildren();results.dataset.empty=String(!list.length);
   if(list.length)results.append(...list.map(makePost));
   else{const image=document.createElement('img');image.src='assets/community-empty.svg';image.alt='';image.className='community-empty-image';const text=document.createElement('p');text.className='community-empty-message';text.textContent=emptyMessages[profileTab];results.append(image,text)}
@@ -116,9 +117,42 @@
   else if(field==='timezone')showDialog('<h2>เขตเวลา</h2><p>Asia/Bangkok ✓</p>');
   else showDialog('<h2>เชื่อมโยงอีเมล</h2><p>เชื่อมต่อที่อยู่อีเมลกับบัญชีของคุณ</p>');
  });
- document.querySelectorAll('[data-community-compose]').forEach(control=>control.onclick=()=>{
-  showDialog('<form class="community-form" id="community-draft-form"><h2>สร้างโพสต์</h2><label for="community-draft-title">หัวข้อ</label><input id="community-draft-title" maxlength="120"><label for="community-draft-body">เนื้อหา</label><textarea id="community-draft-body" maxlength="2000"></textarea><button type="submit" class="community-form-save">บันทึกแบบร่าง</button></form>');
-  byId('community-draft-title').value=draft.title;byId('community-draft-body').value=draft.body;byId('community-draft-form').onsubmit=event=>{event.preventDefault();draft={title:byId('community-draft-title').value,body:byId('community-draft-body').value};byId('dialog').close();toast('บันทึกแบบร่างแล้ว')};
- });
+ const composePage=byId('community-compose-page');let composePreviousTitle='lNKBlRD',composeOpener=null,imageAttempt=0;
+ function syncComposer(){
+  byId('community-draft-title').value=draft.title;byId('community-draft-body').value=draft.body;
+  byId('community-title-placeholder').hidden=Boolean(draft.title);
+  const selected=document.querySelector('[data-community-category="'+draft.category+'"]');byId('community-post-category-value').textContent=selected?selected.textContent.trim():'';
+  const image=byId('community-post-image-preview');image.hidden=!draft.imageUrl;if(draft.imageUrl)image.src=draft.imageUrl;else image.removeAttribute('src');
+ }
+ function openComposer(pushHistory=true){
+  if(composePage.open)return;
+  if(byId('community-page').hidden)document.querySelector('[data-nav=community]').click();
+  if(pushHistory&&location.hash!=='#create-post')history.pushState({createPost:true},'',location.pathname+location.search+'#create-post');
+  syncComposer();composePreviousTitle=document.title;document.title='สร้างโพสต์ — lNKBlRD';composePage.showModal();composePage.querySelector('.community-compose-scroll').scrollTop=0;document.body.classList.add('community-composer-open');byId('community-compose-back').focus({preventScroll:true});
+ }
+ function closeComposer(){if(composePage.open){if(byId('dialog').open)byId('dialog').close();composePage.close()}}
+ document.querySelectorAll('[data-community-compose]').forEach(control=>control.onclick=()=>{composeOpener=control;openComposer()});
+ byId('community-compose-back').onclick=closeComposer;
+ composePage.addEventListener('close',()=>{draft.title=byId('community-draft-title').value;draft.body=byId('community-draft-body').value;document.body.classList.remove('community-composer-open');document.title=composePreviousTitle;if(location.hash==='#create-post')history.back();const opener=composeOpener&&composeOpener.offsetParent!==null?composeOpener:document.querySelector('.community-add');opener.focus({preventScroll:true})});
+ window.addEventListener('popstate',()=>{if(location.hash==='#create-post')openComposer(false);else closeComposer()});
+ byId('community-draft-title').addEventListener('input',()=>{byId('community-title-placeholder').hidden=Boolean(byId('community-draft-title').value)});
+ byId('community-post-category').onclick=()=>{
+  showDialog('<h2>เลือกหมวดหมู่</h2><div id="community-compose-categories"></div>');
+  document.querySelectorAll('[data-community-category]').forEach(tab=>{const choice=button(tab.textContent.trim(),'choice');choice.onclick=()=>{draft.category=tab.dataset.communityCategory;byId('community-post-category-value').textContent=tab.textContent.trim();byId('dialog').close()};byId('community-compose-categories').append(choice)});
+ };
+ byId('community-post-image').onchange=async event=>{
+  const file=event.target.files?.[0];if(!file)return;
+  if(!file.type.startsWith('image/')){event.target.value='';toast('กรุณาเลือกรูปภาพ');return}
+  const attempt=++imageAttempt;byId('community-post-submit').disabled=true;const imageUrl=URL.createObjectURL(file),image=new Image();image.src=imageUrl;
+  try{await image.decode();if(attempt!==imageAttempt){URL.revokeObjectURL(imageUrl);return}if(draft.imageUrl)URL.revokeObjectURL(draft.imageUrl);draft.imageUrl=imageUrl;const preview=byId('community-post-image-preview');preview.src=imageUrl;preview.hidden=false}catch{URL.revokeObjectURL(imageUrl);if(attempt===imageAttempt)toast('ไม่สามารถเปิดรูปภาพนี้ได้')}finally{if(attempt===imageAttempt)byId('community-post-submit').disabled=false}
+ };
+ byId('community-compose-form').onsubmit=event=>{
+  event.preventDefault();const title=byId('community-draft-title').value.trim(),body=byId('community-draft-body').value.trim();
+  if(!title){toast('กรุณาป้อนหัวข้อ');byId('community-draft-title').focus();return}
+  if(!draft.category){toast('กรุณาเลือกหมวดหมู่');byId('community-post-category').focus();return}
+  const createdAt=Date.now();posts.unshift({id:'local-'+createdAt+'-'+posts.length,author:profileName,official:false,owned:true,date:'เมื่อสักครู่',title,intro:'',body,thaiIntro:'',thaiBody:body,likes:0,comments:0,categories:draft.category==='all'?['all']:['all',draft.category],createdAt,imageUrl:draft.imageUrl});
+  draft={title:'',body:'',category:'',imageUrl:''};byId('community-post-image').value='';syncComposer();closeComposer();selectMode(byId('community-profile-tab'));selectProfileTab(byId('community-posts-tab'));paintFeed();toast('สร้างโพสต์ในตัวอย่างแล้ว');
+ };
+ if(location.hash==='#create-post')openComposer(false);
  paintFeed();paintProfile();
 })();
